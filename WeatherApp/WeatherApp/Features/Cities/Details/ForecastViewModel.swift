@@ -49,15 +49,19 @@ class ForecastViewModel: ObservableObject {
         apiService.get(url: url, type: Forecast.self)
             .receive(on: RunLoop.main)
             .sink { [weak self] completion in
-                self?.isLoading = false
+                
                 switch completion {
                 case .failure(let err):
+                    self?.isLoading = false
                     print("Error is \(err.localizedDescription)")
                 case .finished:
                     print("Success")
                 }
             } receiveValue: { [weak self] response in
-                self?.forecast = response
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    self?.isLoading = false
+                    self?.forecast = response
+                }
             } .store(in: &cancellables)
     }
 }
