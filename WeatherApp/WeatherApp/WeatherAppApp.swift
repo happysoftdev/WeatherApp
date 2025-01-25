@@ -11,7 +11,16 @@ import SwiftUI
 struct WeatherAppApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            AppCoordinator()
+                .ignoresSafeArea()
         }
     }
+}
+
+struct AppCoordinator: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> TabBarController {
+        return TabBarController()
+    }
+    
+    func updateUIViewController(_ uiViewController: TabBarController, context: Context) {}
 }
