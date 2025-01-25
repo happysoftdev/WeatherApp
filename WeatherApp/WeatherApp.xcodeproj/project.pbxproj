@@ -11,6 +11,10 @@
 		4DADD8292D44F76B0043628F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DADD8282D44F76B0043628F /* ContentView.swift */; };
 		4DADD82B2D44F76D0043628F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82A2D44F76D0043628F /* Assets.xcassets */; };
 		4DADD82E2D44F76D0043628F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82D2D44F76D0043628F /* Preview Assets.xcassets */; };
+		4DDE5C3D2D44F98A00BBF8AA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */; };
+		4DDE5C3F2D44FABE00BBF8AA /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */; };
+		4DDE5C412D44FACE00BBF8AA /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C402D44FACE00BBF8AA /* DetailsView.swift */; };
+		4DDE5C432D44FAEC00BBF8AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C422D44FAEC00BBF8AA /* SettingsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +23,10 @@
 		4DADD8282D44F76B0043628F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		4DADD82A2D44F76D0043628F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DADD82D2D44F76D0043628F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
+		4DDE5C402D44FACE00BBF8AA /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
+		4DDE5C422D44FAEC00BBF8AA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +63,10 @@
 				4DADD8282D44F76B0043628F /* ContentView.swift */,
 				4DADD82A2D44F76D0043628F /* Assets.xcassets */,
 				4DADD82C2D44F76D0043628F /* Preview Content */,
+				4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */,
+				4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */,
+				4DDE5C402D44FACE00BBF8AA /* DetailsView.swift */,
+				4DDE5C422D44FAEC00BBF8AA /* SettingsView.swift */,
 			);
 			path = WeatherApp;
 			sourceTree = "<group>";
@@ -137,6 +149,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4DDE5C3F2D44FABE00BBF8AA /* ListView.swift in Sources */,
+				4DDE5C412D44FACE00BBF8AA /* DetailsView.swift in Sources */,
+				4DDE5C3D2D44F98A00BBF8AA /* TabBarController.swift in Sources */,
+				4DDE5C432D44FAEC00BBF8AA /* SettingsView.swift in Sources */,
 				4DADD8292D44F76B0043628F /* ContentView.swift in Sources */,
 				4DADD8272D44F76B0043628F /* WeatherAppApp.swift in Sources */,
 			);
