@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct ListView: View {
+    let defaultCities: [String] = ["Tokyo", "Rome", "London"]
     var body: some View {
-        Text("Cities list view placeholder")
+        List(defaultCities, id: \.self) { city in
+            Text(city)
+        }
     }
 }
 
