@@ -17,17 +17,20 @@ class ApiEndpoints {
             components.queryItems = [
                 URLQueryItem(name: "appid", value: apiKey),
                 URLQueryItem(name: "lat", value: String(lat)),
-                URLQueryItem(name: "lon", value: String(lon))
+                URLQueryItem(name: "lon", value: String(lon)),
+                URLQueryItem(name: "units", value: "metric"),
             ]
             return components.url
         }
         return nil
     }
     
-    static func weather() -> URL? {
+    static func weather(locationName: String) -> URL? {
         if var components = URLComponents(string: baseURL) {
             components.queryItems = [
-                URLQueryItem(name: "appid", value: apiKey)
+                URLQueryItem(name: "appid", value: apiKey),
+                URLQueryItem(name: "q", value: locationName),
+                URLQueryItem(name: "units", value: "metric")
             ]
             return components.url
         }
