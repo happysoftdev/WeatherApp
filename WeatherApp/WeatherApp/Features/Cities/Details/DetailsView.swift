@@ -21,7 +21,7 @@ class CityForecastViewModel: ObservableObject {
         self.isLoading = true
         self.errorMessage = nil
         
-        let url = ApiEndpoints.weather2(lat: 51.5, lon: -0.11)
+        let url = ApiEndpoints.weather(lat: 51.5, lon: -0.11)
         apiService.get(url: url, type: City.self)
             .receive(on: RunLoop.main)
             .sink { [weak self] completion in
@@ -41,7 +41,7 @@ class CityForecastViewModel: ObservableObject {
         self.isLoading = true
         self.errorMessage = nil
         
-        let url = ApiEndpoints.weather2(lat: location.latitude, lon: location.longitude)
+        let url = ApiEndpoints.weather(lat: location.latitude, lon: location.longitude)
         apiService.get(url: url, type: City.self)
             .receive(on: RunLoop.main)
             .sink { [weak self] completion in

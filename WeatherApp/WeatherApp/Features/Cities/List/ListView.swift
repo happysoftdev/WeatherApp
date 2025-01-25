@@ -10,6 +10,8 @@ import CoreLocation
 
 struct ListView: View {
     
+    @Environment(\.colorScheme) private var colorScheme
+    
     @StateObject private var weatherViewModel = CityForecastViewModel()
     @StateObject private var locationManager = LocationManager()
     
@@ -37,6 +39,7 @@ struct ListView: View {
             .onAppear {
                 locationManager.requestLocation()
             }
+            .background(colorScheme == .dark ? Color.black : Color.white)
             .navigationTitle("Weather")
             .padding()
         }

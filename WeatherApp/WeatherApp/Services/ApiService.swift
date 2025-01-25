@@ -12,14 +12,32 @@ class ApiEndpoints {
     static let apiKey = "55d3b00d9ec14f573cb1ae24908a0d11"
     static let baseURL = "https://api.openweathermap.org/data/2.5/weather"
     
-    static func weather(lat: Double, lon: Double) -> String { return "\(baseURL)?lat={lat}&lon={lon}&appid={\(apiKey)}" }
-    static func weather2(lat: Double, lon: Double) -> URL? {
+    static func weather(lat: Double, lon: Double) -> URL? {
         if var components = URLComponents(string: baseURL) {
             components.queryItems = [
                 URLQueryItem(name: "appid", value: apiKey),
                 URLQueryItem(name: "lat", value: String(lat)),
-                URLQueryItem(name: "lon", value: String(lon)),
+                URLQueryItem(name: "lon", value: String(lon))
             ]
+            return components.url
+        }
+        return nil
+    }
+    
+    static func weather() -> URL? {
+        if var components = URLComponents(string: baseURL) {
+            components.queryItems = [
+                URLQueryItem(name: "appid", value: apiKey)
+            ]
+            return components.url
+        }
+        return nil
+    }
+    
+    // REFACTORING: use this - send query params from elsewhere because you want to get data using coordinates / city name
+    static func weather(with queryParameters: [URLQueryItem]) -> URL? {
+        if var components = URLComponents(string: baseURL) {
+            components.queryItems = queryParameters
             return components.url
         }
         return nil
@@ -32,6 +50,7 @@ enum NetworkError: Error {
     case unknown
 }
 
+//REFACTORING: use this
 extension NetworkError: LocalizedError {
     var errorDescription: String? {
         switch self {
