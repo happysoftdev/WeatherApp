@@ -13,6 +13,7 @@
 		4DADD8272D44F76B0043628F /* WeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DADD8262D44F76B0043628F /* WeatherAppApp.swift */; };
 		4DADD82B2D44F76D0043628F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82A2D44F76D0043628F /* Assets.xcassets */; };
 		4DADD82E2D44F76D0043628F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82D2D44F76D0043628F /* Preview Assets.xcassets */; };
+		4DBD0C4F2D45332600BFB993 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD0C4E2D45332600BFB993 /* LocationManager.swift */; };
 		4DDE5C3D2D44F98A00BBF8AA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */; };
 		4DDE5C3F2D44FABE00BBF8AA /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */; };
 		4DDE5C412D44FACE00BBF8AA /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C402D44FACE00BBF8AA /* DetailsView.swift */; };
@@ -27,6 +28,7 @@
 		4DADD8262D44F76B0043628F /* WeatherAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppApp.swift; sourceTree = "<group>"; };
 		4DADD82A2D44F76D0043628F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DADD82D2D44F76D0043628F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		4DBD0C4E2D45332600BFB993 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		4DDE5C402D44FACE00BBF8AA /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
@@ -56,6 +58,7 @@
 			isa = PBXGroup;
 			children = (
 				4D8642D62D4511DF00AC5D5C /* ApiService.swift */,
+				4DBD0C4E2D45332600BFB993 /* LocationManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				4D1BDA062D4502B0009D0078 /* CitiesListViewModel.swift in Sources */,
 				4D8642D72D4511DF00AC5D5C /* ApiService.swift in Sources */,
 				4D8642D52D45062F00AC5D5C /* City.swift in Sources */,
+				4DBD0C4F2D45332600BFB993 /* LocationManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +366,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Hi, we need this, please allow";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -390,6 +395,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherApp/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Hi, we need this, please allow";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
