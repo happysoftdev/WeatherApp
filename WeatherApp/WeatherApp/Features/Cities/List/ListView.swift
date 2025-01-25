@@ -8,11 +8,10 @@
 import SwiftUI
 
 struct ListView: View {
+    
+    @StateObject private var viewModel = CitiesListViewModel()
+    
     var body: some View {
-        Text("Cities list view placeholder")
+        DetailsView()
     }
-}
-
-#Preview {
-    ListView()
 }
