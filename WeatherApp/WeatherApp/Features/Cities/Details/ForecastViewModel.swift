@@ -17,32 +17,34 @@ class ForecastViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let apiService = ApiService.shared
     
-    func fetch(for lat: Double, and lon: Double) {
+    func fetch(lat: Double? = nil, lon: Double? = nil, locationName: String? = nil, unit: String? = nil) {
+        
         self.isLoading = true
         self.errorMessage = nil
         
-        let url = ApiEndpoints.weather(lat: lat, lon: lon)
+        var parameters: [URLQueryItem] = []
         
-        apiService.get(url: url, type: Forecast.self)
-            .receive(on: RunLoop.main)
-            .sink { [weak self] completion in
-                self?.isLoading = false
-                switch completion {
-                case .failure(let err):
-                    print("Error is \(err.localizedDescription)")
-                case .finished:
-                    print("Success")
-                }
-            } receiveValue: { [weak self] response in
-                self?.forecast = response
-            } .store(in: &cancellables)
-    }
-    
-    func fetch(for locationName: String) {
-        self.isLoading = true
-        self.errorMessage = nil
+        // REFACTORING: move this outside + test it
+        if let locationName = locationName {
+            parameters.append(URLQueryItem(name: "q", value: locationName))
+        } else if let lat = lat, let lon = lon {
+            parameters.append(contentsOf: [
+                    URLQueryItem(name: "lat", value: String(lat)),
+                    URLQueryItem(name: "lon", value: String(lon))
+                ]
+            )
+        }
         
-        let url = ApiEndpoints.weather(locationName: locationName)
+        // REFACTORING: move this outside + test it
+        if let unit = unit {
+            if unit == "Celsius" {
+                parameters.append(URLQueryItem(name: "units", value: "metric"))
+            } else if unit == "Fahrenheit" {
+                parameters.append(URLQueryItem(name: "units", value: "imperial"))
+            }
+        }
+        
+        let url = ApiEndpoints.weather(with: parameters)
         
         apiService.get(url: url, type: Forecast.self)
             .receive(on: RunLoop.main)

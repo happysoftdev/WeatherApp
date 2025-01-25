@@ -23,7 +23,6 @@ struct Forecast: Codable {
     }
 }
 
-
 struct MainTemperature: Codable {
     let temp: Double
     let feelsLike: Double
@@ -49,29 +48,11 @@ struct Wind: Codable {
     }
 }
 
-//struct City: Codable {
-//    let name: String
-//    let coord: Coordinates
-//    let weather: [Weather]
-//    
-//    enum CodingKeys: String, CodingKey {
-//        case name
-//        case coord
-//        case weather
-//    }
-//}
-//extension City {
-//    static let mock = City(name: "Manhanttenstur", coord: Coordinates.mock, weather: [Weather.mock])
-//}
-//
 struct Coordinates: Codable {
     let lon: Double
     let lat: Double
 }
-//extension Coordinates {
-//    static let mock = Coordinates(lon: 51, lat: 12)
-//}
-//
+
 struct Weather: Codable {
     let main: String
     let description: String
@@ -81,7 +62,3 @@ struct Weather: Codable {
         case description
     }
 }
-//
-//extension Weather {
-//    static let mock = Weather(main: "Cloud", description: "More info that it's cloudy")
-//}
