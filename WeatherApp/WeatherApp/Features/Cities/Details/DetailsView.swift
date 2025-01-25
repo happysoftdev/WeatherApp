@@ -16,11 +16,23 @@ struct WeatherInfoView: View {
                 .foregroundStyle(.white)
                 .padding(.bottom, 16)
             VStack(spacing: 10) {
-                Image(systemName: "cloud.sun.fill")
-                    .renderingMode(.original)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(width: 100, height: 100)
+                
+                if let iconCode = viewModel.iconCode, let url = ApiEndpoints.iconURL(code: iconCode) {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                    } placeholder: {
+                        ProgressView()
+                    }
+                } else {
+                    Image(systemName: "cloud.sun.fill")
+                        .renderingMode(.original)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 100, height: 100)
+                }
                 Text(String(viewModel.forecast?.mainTemperature.temp ?? 0))
                     .font(.system(size: 64, weight: .medium))
                     .foregroundStyle(.white)

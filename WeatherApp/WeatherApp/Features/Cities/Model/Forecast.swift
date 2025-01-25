@@ -56,9 +56,11 @@ struct Coordinates: Codable {
 struct Weather: Codable {
     let main: String
     let description: String
+    let icon: String
     
     enum CodingKeys: String, CodingKey {
         case main
         case description
+        case icon
     }
 }

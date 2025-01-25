@@ -13,6 +13,7 @@ class ForecastViewModel: ObservableObject {
     @Published var forecast: Forecast? = nil
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
+    @Published var iconCode: String? = nil
     
     private var cancellables = Set<AnyCancellable>()
     private let apiService = ApiService.shared
@@ -61,6 +62,7 @@ class ForecastViewModel: ObservableObject {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                     self?.isLoading = false
                     self?.forecast = response
+                    self?.iconCode = response.weather.first?.icon
                 }
             } .store(in: &cancellables)
     }
