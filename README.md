@@ -1,2 +1,2 @@
-# weather-app
+# WeatherApp
 This is a very fun weather app. 
