@@ -6,61 +6,16 @@
 //
 
 import SwiftUI
-import Combine
-import CoreLocation
-
-class CityForecastViewModel: ObservableObject {
-    @Published var city: City? = City.mock
-    @Published var isLoading = false
-    @Published var errorMessage: String? = nil
-    
-    private var cancellables = Set<AnyCancellable>()
-    private let apiService = ApiService.shared
-    
-    func fetch() {
-        self.isLoading = true
-        self.errorMessage = nil
-        
-        let url = ApiEndpoints.weather(lat: 51.5, lon: -0.11)
-        apiService.get(url: url, type: City.self)
-            .receive(on: RunLoop.main)
-            .sink { [weak self] completion in
-                self?.isLoading = false
-                switch completion {
-                case .failure(let err):
-                    print("Error is \(err.localizedDescription)")
-                case .finished:
-                    print("Finished")
-                }
-            } receiveValue: { [weak self] response in
-                self?.city = response
-            } .store(in: &cancellables)
-    }
-    
-    func fetch(for location: CLLocationCoordinate2D) {
-        self.isLoading = true
-        self.errorMessage = nil
-        
-        let url = ApiEndpoints.weather(lat: location.latitude, lon: location.longitude)
-        apiService.get(url: url, type: City.self)
-            .receive(on: RunLoop.main)
-            .sink { [weak self] completion in
-                self?.isLoading = false
-                switch completion {
-                case .failure(let err):
-                    print("Error is \(err.localizedDescription)")
-                case .finished:
-                    print("Finished")
-                }
-            } receiveValue: { [weak self] response in
-                self?.city = response
-            } .store(in: &cancellables)
-    }
-}
 
 struct DetailsView: View {
     
-    @StateObject var viewModel = CityForecastViewModel()
+    @StateObject var viewModel = ForecastViewModel()
+    @AppStorage("temperatureUnit") private var selectedUnit: TemperatureUnit = .celsius
+    
+    var lat: Double? = nil
+    var lon: Double? = nil
+    var locationName: String? = nil
+    
     var body: some View {
         VStack {
             if viewModel.isLoading {
@@ -68,13 +23,30 @@ struct DetailsView: View {
             } else if let errorMessage = viewModel.errorMessage {
                 Text("Error: \(errorMessage)")
             } else {
-                Text(viewModel.city?.name ?? "default title")
+                Text(viewModel.forecast?.name ?? "default title")
+                    .font(.headline)
+                Text(String(viewModel.forecast?.mainTemperature.temp ?? 0))
                     .font(.headline)
             }
+            
+            Text("Temperature unit; \(selectedUnit.rawValue)")
         }
         .navigationTitle("City details")
         .onAppear {
-            viewModel.fetch()
+            if let locationName = locationName {
+                viewModel.fetch(lat: nil, lon: nil, locationName: locationName, unit: selectedUnit.rawValue)
+            } else if let lat = lat, let lon = lon {
+                viewModel.fetch(lat: lat,lon: lon, unit: selectedUnit.rawValue)
+            }
+        }
+        .onChange(of: selectedUnit) {
+            print("Temperature unit did change") // new request here
+            
+            if let locationName = locationName {
+                viewModel.fetch(lat: nil, lon: nil, locationName: locationName, unit: selectedUnit.rawValue)
+            } else if let lat = lat, let lon = lon {
+                viewModel.fetch(lat: lat,lon: lon, unit: selectedUnit.rawValue)
+            }
         }
     }
 }

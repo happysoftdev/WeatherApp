@@ -12,7 +12,7 @@ struct ListView: View {
     
     @Environment(\.colorScheme) private var colorScheme
     
-    @StateObject private var weatherViewModel = CityForecastViewModel()
+    @StateObject private var weatherViewModel = ForecastViewModel()
     @StateObject private var locationManager = LocationManager()
     
     var defaultLocations: [String] = ["Tokyo", "London", "Barcelona"]
@@ -20,16 +20,16 @@ struct ListView: View {
     var body: some View {
         NavigationStack {
             List {
-                if let locationName = locationManager.locationName {
+                if let locationName = locationManager.locationName, let location = locationManager.location {
                     NavigationLink {
-                        DetailsView()
+                        DetailsView(lat: location.latitude, lon: location.longitude)
                     } label: {
                         Text("Your location: \(locationName)")
                     }
                 }
                 ForEach(defaultLocations, id: \.self) { location in
                     NavigationLink {
-                        DetailsView()
+                        DetailsView(locationName: location)
                     } label: {
                         Text(location)
                     }
