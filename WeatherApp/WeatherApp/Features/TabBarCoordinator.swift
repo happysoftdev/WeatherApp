@@ -22,6 +22,14 @@ class TabBarCoordinator {
         tabBarController.viewControllers = [homeView, settingsView]
         tabBarController.selectedIndex = 0
 
+        let appearance = UITabBarAppearance()
+        appearance.backgroundColor = UIColor.systemBackground
+        
+        appearance.selectionIndicatorTintColor = UIColor.white
+        
+        tabBarController.tabBar.standardAppearance = appearance
+        tabBarController.tabBar.scrollEdgeAppearance = appearance
+        
         return tabBarController
     }
 }

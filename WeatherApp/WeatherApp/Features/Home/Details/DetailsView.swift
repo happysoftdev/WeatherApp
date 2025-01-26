@@ -10,7 +10,6 @@ import SwiftUI
 struct DetailsView: View {
     
     @StateObject var viewModel = ForecastViewModel()
-    @AppStorage("temperatureUnit") private var selectedUnit: TemperatureUnit = .celsius
     
     //TODO: Move these somewhere else
     var city: String? = nil
@@ -26,7 +25,7 @@ struct DetailsView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]),
+            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green.opacity(0.4)]),
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
             .edgesIgnoringSafeArea(.all)
@@ -53,17 +52,14 @@ struct DetailsView: View {
             .onAppear {
                 fetchData()
             }
-            .onChange(of: selectedUnit) {
-                fetchData()
-            }
         }
     }
     
     private func fetchData() {
         if let city = city {
-            viewModel.getWeather(city: city, unit: selectedUnit)
+            viewModel.getWeather(city: city)
         } else if let lat = latitude, let lon = longitude {
-            viewModel.getWeather(lat: lat, lon: lon, unit: selectedUnit)
+            viewModel.getWeather(lat: lat, lon: lon)
         }
     }
 }

@@ -48,3 +48,7 @@ struct City: Codable {
         try container.encodeIfPresent(self.forecast, forKey: .forecast)
     }
 }
+
+extension City: Identifiable {
+    var id: String { return name }
+}

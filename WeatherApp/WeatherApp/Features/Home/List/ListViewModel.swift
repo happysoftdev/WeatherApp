@@ -8,12 +8,19 @@
 import Foundation
 import Combine
 import CoreLocation
+import SwiftUI
 
 class ListViewModel: ObservableObject {
     private var locationManager = LocationManager()
     
     @Published var cities: [City] = []
     @Published var cachedCities: [City] = []
+    
+    @Published var currentLocation: City?
+    @Published var defaultCities: [City] = [
+        City(name: "London"),
+        City(name: "Barcelona")
+    ]
     
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
@@ -32,12 +39,9 @@ class ListViewModel: ObservableObject {
     }
     
     private func setupBindings() {
-        locationManager.$error
-            .sink { [weak self] error in
-                guard let error = error else { return }
-                print("Error - location manager: \(error)")
-                self?.errorMessage = error.localizedDescription
-                self?.cities = self?.defaultCities() ?? []
+        locationManager.$errorMessage
+            .sink { [weak self] errorMessage in
+                self?.errorMessage = errorMessage
             }
             .store(in: &cancellables)
         
@@ -54,19 +58,19 @@ class ListViewModel: ObservableObject {
     }
     
     func fetchWeather(for location: CLLocationCoordinate2D, with name: String) {
-        isLoading = true
-        
         let currentCity = City(name: name)
-        cities = [currentCity] + defaultCities()
-        
+        currentLocation = currentCity
         errorMessage = nil
-        isLoading = false
     }
     
-    func defaultCities() -> [City] {
-        return [
-            City(name: "London"),
-            City(name: "Barcelona")
-        ]
+    func getWeatherIconName(for city: City) -> String {
+        switch city.name {
+        case "Barcelona":
+            return "cloud.fill"
+        case "London":
+            return  "cloud.sun.fill"
+        default:
+            return "sun.max.fill"
+        }
     }
 }
