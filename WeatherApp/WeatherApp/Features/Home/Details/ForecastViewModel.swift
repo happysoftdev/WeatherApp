@@ -23,7 +23,7 @@ class ForecastViewModel: ObservableObject {
         self.weatherService = weatherService
     }
     
-    func getWeather(for city: String, unit: TemperatureUnit) {
+    func getWeather(city: String, unit: TemperatureUnit) {
         self.isLoading = true
         self.errorMessage = nil
         
@@ -46,7 +46,7 @@ class ForecastViewModel: ObservableObject {
             } .store(in: &cancellables)
     }
     
-    func getWeather(with lat: Double, and lon: Double, unit: TemperatureUnit) {
+    func getWeather(lat: Double, lon: Double, unit: TemperatureUnit) {
         self.isLoading = true
         self.errorMessage = nil
         

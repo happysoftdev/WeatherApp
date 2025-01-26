@@ -13,7 +13,7 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationStack {
-            Form {
+            List {
                 Section(header: Text("Temperature Unit")) {
                     Picker("Unit", selection: $viewModel.selectedUnit) {
                         ForEach(TemperatureUnit.allCases) { unit in
@@ -22,6 +22,7 @@ struct SettingsView: View {
                     }
                     .pickerStyle(SegmentedPickerStyle())
                 }
+                .listStyle(.plain)
             }
             .navigationTitle("Settings")
         }

@@ -15,7 +15,7 @@ struct CircularProgressView: View {
             Circle()
                 .stroke(lineWidth: 4)
                 .foregroundColor(.gray.opacity(0.3))
-                .frame(width: 50, height: 50)
+                .frame(width: 80, height: 80)
 
             Circle()
                 .trim(from: 0, to: 0.7) // Arc from 0% to 70%
@@ -23,7 +23,7 @@ struct CircularProgressView: View {
                     AngularGradient(gradient: Gradient(colors: [.blue, .purple]), center: .center),
                     style: StrokeStyle(lineWidth: 4, lineCap: .round)
                 )
-                .frame(width: 50, height: 50)
+                .frame(width: 80, height: 80)
                 .rotationEffect(Angle(degrees: isAnimating ? 360 : 0))
                 .animation(Animation.linear(duration: 1).repeatForever(autoreverses: false), value: isAnimating)
         }

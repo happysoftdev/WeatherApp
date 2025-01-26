@@ -12,6 +12,18 @@ struct DetailsView: View {
     @StateObject var viewModel = ForecastViewModel()
     @AppStorage("temperatureUnit") private var selectedUnit: TemperatureUnit = .celsius
     
+    //TODO: Move these somewhere else
+    var city: String? = nil
+    var latitude: Double? = nil
+    var longitude: Double? = nil
+    
+    init(viewModel: ForecastViewModel, city: String? = nil, latitude: Double? = nil, longitude: Double? = nil) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.city = city
+        self.latitude = latitude
+        self.longitude = longitude
+    }
+    
     var body: some View {
         ZStack {
             LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]),
@@ -28,28 +40,30 @@ struct DetailsView: View {
                 } else {
                     WeatherInfoView(viewModel: viewModel)
                 }
-                Spacer()
-                Text("Temperature unit; \(selectedUnit.rawValue)")
             }
-            .navigationTitle("City details") //TODO: Add city title / current location text
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Current Weather")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                }
+            }
+            .tint(.white)
             .navigationBarTitleDisplayMode(.inline)
-            
             .onAppear {
-//                if let locationName {
-//                    viewModel.getWeather(for: locationName, unit: selectedUnit)
-//                } else if let lat, let lon {
-//                    viewModel.getWeather(with: lat, and: lon, unit: selectedUnit)
-//                }
+                fetchData()
             }
-            
-            //TODO: Fix this
-//            .onChange(of: selectedUnit) {
-//                if let locationName {
-//                    viewModel.getWeather(for: locationName, unit: selectedUnit)
-//                } else if let lat, let lon {
-//                    viewModel.getWeather(with: lat, and: lon, unit: selectedUnit)
-//                }
-//            }
+            .onChange(of: selectedUnit) {
+                fetchData()
+            }
+        }
+    }
+    
+    private func fetchData() {
+        if let city = city {
+            viewModel.getWeather(city: city, unit: selectedUnit)
+        } else if let lat = latitude, let lon = longitude {
+            viewModel.getWeather(lat: lat, lon: lon, unit: selectedUnit)
         }
     }
 }

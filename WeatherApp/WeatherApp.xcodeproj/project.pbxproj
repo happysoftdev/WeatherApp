@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D1BDA062D4502B0009D0078 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1BDA052D4502B0009D0078 /* ListViewModel.swift */; };
+		4D35AF5A2D4668FA00B45F98 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D35AF592D4668FA00B45F98 /* City.swift */; };
 		4D42B78C2D457CBA001AD965 /* ForecastViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D42B78B2D457CBA001AD965 /* ForecastViewModel.swift */; };
 		4D62D4472D46398A00776401 /* WeatherService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D62D4462D46398A00776401 /* WeatherService.swift */; };
 		4D62D44B2D463F3800776401 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D62D44A2D463F3800776401 /* AppCoordinator.swift */; };
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		4D1BDA052D4502B0009D0078 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		4D35AF592D4668FA00B45F98 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		4D42B78B2D457CBA001AD965 /* ForecastViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModel.swift; sourceTree = "<group>"; };
 		4D62D4462D46398A00776401 /* WeatherService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherService.swift; sourceTree = "<group>"; };
 		4D62D44A2D463F3800776401 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -143,6 +145,7 @@
 			isa = PBXGroup;
 			children = (
 				4D8642D42D45062F00AC5D5C /* Forecast.swift */,
+				4D35AF592D4668FA00B45F98 /* City.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			files = (
 				4DDE5C3F2D44FABE00BBF8AA /* ListView.swift in Sources */,
 				4DDE5C412D44FACE00BBF8AA /* DetailsView.swift in Sources */,
+				4D35AF5A2D4668FA00B45F98 /* City.swift in Sources */,
 				4DDE5C432D44FAEC00BBF8AA /* SettingsView.swift in Sources */,
 				4DADD8272D44F76B0043628F /* WeatherAppApp.swift in Sources */,
 				4D1BDA062D4502B0009D0078 /* ListViewModel.swift in Sources */,
