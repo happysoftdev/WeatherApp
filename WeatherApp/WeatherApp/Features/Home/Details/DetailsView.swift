@@ -34,9 +34,10 @@ struct DetailsView: View {
                 Spacer()
                 Text("Temperature unit; \(selectedUnit.rawValue)")
             }
-            .navigationTitle("City details")
+            .navigationTitle("City details") //TODO: Add city title / current location text
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
+                //TODO: add a method in the VM that fetches data and call it here
                 if let locationName = locationName {
                     viewModel.fetch(lat: nil, lon: nil, locationName: locationName, unit: selectedUnit.rawValue)
                 } else if let lat = lat, let lon = lon {
@@ -44,8 +45,7 @@ struct DetailsView: View {
                 }
             }
             .onChange(of: selectedUnit) {
-                print("Temperature unit did change") // new request here
-                
+                //TODO: add a method in the VM that fetches data and call it here
                 if let locationName = locationName {
                     viewModel.fetch(lat: nil, lon: nil, locationName: locationName, unit: selectedUnit.rawValue)
                 } else if let lat = lat, let lon = lon {

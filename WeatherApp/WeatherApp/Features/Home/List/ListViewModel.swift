@@ -8,7 +8,8 @@
 import Foundation
 import Combine
 
-class CitiesListViewModel: ObservableObject {
+//TODO: Make this take care of requesting location & display data only after requesting location so that all data appears at the same time
+class ListViewModel: ObservableObject {
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
     

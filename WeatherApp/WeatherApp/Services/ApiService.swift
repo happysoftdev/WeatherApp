@@ -30,6 +30,7 @@ class ApiEndpoints {
     }
 }
 
+//REFACTORING: use this
 enum NetworkError: Error {
     case invalidURL
     case responseError
@@ -83,3 +84,4 @@ class ApiService {
         return makeRequest(url: url, method: "GET", type: type)
     }
 }
+
