@@ -11,8 +11,14 @@ import Combine
 class ApiEndpoints {
     static let apiKey = "55d3b00d9ec14f573cb1ae24908a0d11"
     static let baseURL = "https://api.openweathermap.org/data/2.5/weather"
+    static let iconBaseURL = "https://openweathermap.org/img/wn/"
     
-    // REFACTORING: use this - send query params from elsewhere because you want to get data using coordinates / city name
+    static func iconURL(code: String) -> URL? {
+        var urlString = iconBaseURL
+        urlString.append(contentsOf: "\(code).png")
+        return URL(string: urlString)
+    }
+    
     static func weather(with queryParameters: [URLQueryItem]) -> URL? {
         if var components = URLComponents(string: baseURL) {
             var parameters = queryParameters
@@ -77,4 +83,3 @@ class ApiService {
         return makeRequest(url: url, method: "GET", type: type)
     }
 }
-

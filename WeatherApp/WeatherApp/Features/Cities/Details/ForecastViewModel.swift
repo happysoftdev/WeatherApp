@@ -13,9 +13,15 @@ class ForecastViewModel: ObservableObject {
     @Published var forecast: Forecast? = nil
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
+    @Published var iconCode: String? = nil
     
     private var cancellables = Set<AnyCancellable>()
     private let apiService = ApiService.shared
+    
+    // mocking
+    init(forecast: Forecast? = nil) {
+        self.forecast = forecast
+    }
     
     func fetch(lat: Double? = nil, lon: Double? = nil, locationName: String? = nil, unit: String? = nil) {
         
@@ -49,15 +55,24 @@ class ForecastViewModel: ObservableObject {
         apiService.get(url: url, type: Forecast.self)
             .receive(on: RunLoop.main)
             .sink { [weak self] completion in
-                self?.isLoading = false
+                
                 switch completion {
                 case .failure(let err):
+                    self?.isLoading = false
                     print("Error is \(err.localizedDescription)")
                 case .finished:
                     print("Success")
                 }
             } receiveValue: { [weak self] response in
-                self?.forecast = response
+                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+                    self?.isLoading = false
+                    self?.forecast = response
+                    self?.iconCode = response.weather.first?.icon
+                }
             } .store(in: &cancellables)
     }
+}
+
+extension ForecastViewModel {
+    static let mock = ForecastViewModel(forecast: Forecast.mock)
 }
