@@ -27,23 +27,34 @@ class ForecastViewModel: ObservableObject {
         self.isLoading = true
         self.errorMessage = nil
         
-        weatherService.fetchWeather(for: city, unit: getMeasureUnit(from: unit))
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] completion in
-                switch completion {
-                case .failure(let err):
-                    self?.isLoading = false
-                    print("Error is \(err.localizedDescription)")
-                case .finished:
-                    print("Success")
-                }
-            } receiveValue: { [weak self] response in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
-                    self?.isLoading = false
-                    self?.forecast = response
-                    self?.iconCode = response.weather.first?.icon
-                }
-            } .store(in: &cancellables)
+        // checking cache for this certain city
+        if let cachedData = CacheManager.shared.getCitiesArray(),
+           let forecastCache = cachedData.first(where: { $0.name ==  city}) {
+            self.forecast = forecastCache.forecast
+            self.isLoading = false
+        } else {
+            // new request
+            weatherService.fetchWeather(for: city, unit: getMeasureUnit(from: unit))
+                .receive(on: DispatchQueue.main)
+                .sink { [weak self] completion in
+                    switch completion {
+                    case .failure(let err):
+                        self?.isLoading = false
+                        print("Error is \(err.localizedDescription)")
+                    case .finished:
+                        print("Success")
+                    }
+                } receiveValue: { [weak self] response in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+                        self?.isLoading = false
+                        self?.forecast = response
+                        self?.iconCode = response.weather.first?.icon
+                        
+                        let city = City(forecast: response)
+                        CacheManager.shared.addCityCache(city)
+                    }
+                } .store(in: &cancellables)
+        }
     }
     
     func getWeather(lat: Double, lon: Double, unit: TemperatureUnit) {
