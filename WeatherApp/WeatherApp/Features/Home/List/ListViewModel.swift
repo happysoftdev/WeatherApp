@@ -25,7 +25,6 @@ class ListViewModel: ObservableObject {
         setupBindings()
     }
     
-    // read from cache - saving will happen in the details screen
     func loadCachedData() {
         if let cachedData = CacheManager.shared.getCitiesArray() {
             self.cachedCities = cachedData
