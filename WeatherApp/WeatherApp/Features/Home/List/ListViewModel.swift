@@ -13,13 +13,23 @@ class ListViewModel: ObservableObject {
     private var locationManager = LocationManager()
     
     @Published var cities: [City] = []
+    @Published var cachedCities: [City] = []
+    
     @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
+        loadCachedData()
         setupBindings()
+    }
+    
+    // read from cache - saving will happen in the details screen
+    func loadCachedData() {
+        if let cachedData = CacheManager.shared.getCitiesArray() {
+            self.cachedCities = cachedData
+        }
     }
     
     private func setupBindings() {
@@ -47,17 +57,17 @@ class ListViewModel: ObservableObject {
     func fetchWeather(for location: CLLocationCoordinate2D, with name: String) {
         isLoading = true
         
-        let currentCity = City(name: name, temperature: 23)
+        let currentCity = City(name: name)
         cities = [currentCity] + defaultCities()
+        
         errorMessage = nil
         isLoading = false
     }
     
     func defaultCities() -> [City] {
         return [
-            City(name: "New York", temperature: 5),
-            City(name: "London", temperature: 10),
-            City(name: "Tokyo", temperature: 15)
+            City(name: "London"),
+            City(name: "Barcelona")
         ]
     }
 }
