@@ -17,13 +17,12 @@
 		4D62D4532D46402400776401 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D62D4522D46402400776401 /* SettingsViewModel.swift */; };
 		4D7F29382D463377005C986A /* WeatherInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7F29372D463377005C986A /* WeatherInfoView.swift */; };
 		4D8642D52D45062F00AC5D5C /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8642D42D45062F00AC5D5C /* Forecast.swift */; };
-		4D8642D72D4511DF00AC5D5C /* ApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8642D62D4511DF00AC5D5C /* ApiService.swift */; };
+		4D8642D72D4511DF00AC5D5C /* ApiEndpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8642D62D4511DF00AC5D5C /* ApiEndpoints.swift */; };
 		4DADD8272D44F76B0043628F /* WeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DADD8262D44F76B0043628F /* WeatherAppApp.swift */; };
 		4DADD82B2D44F76D0043628F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82A2D44F76D0043628F /* Assets.xcassets */; };
 		4DADD82E2D44F76D0043628F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82D2D44F76D0043628F /* Preview Assets.xcassets */; };
 		4DBD0C4F2D45332600BFB993 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DBD0C4E2D45332600BFB993 /* LocationManager.swift */; };
 		4DC21C232D458AD900B6D124 /* CircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC21C222D458AD900B6D124 /* CircularProgressView.swift */; };
-		4DDE5C3D2D44F98A00BBF8AA /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */; };
 		4DDE5C3F2D44FABE00BBF8AA /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */; };
 		4DDE5C412D44FACE00BBF8AA /* DetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C402D44FACE00BBF8AA /* DetailsView.swift */; };
 		4DDE5C432D44FAEC00BBF8AA /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DDE5C422D44FAEC00BBF8AA /* SettingsView.swift */; };
@@ -40,14 +39,13 @@
 		4D62D4522D46402400776401 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		4D7F29372D463377005C986A /* WeatherInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherInfoView.swift; sourceTree = "<group>"; };
 		4D8642D42D45062F00AC5D5C /* Forecast.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
-		4D8642D62D4511DF00AC5D5C /* ApiService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiService.swift; sourceTree = "<group>"; };
+		4D8642D62D4511DF00AC5D5C /* ApiEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiEndpoints.swift; sourceTree = "<group>"; };
 		4DADD8232D44F76B0043628F /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DADD8262D44F76B0043628F /* WeatherAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppApp.swift; sourceTree = "<group>"; };
 		4DADD82A2D44F76D0043628F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4DADD82D2D44F76D0043628F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		4DBD0C4E2D45332600BFB993 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		4DC21C222D458AD900B6D124 /* CircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircularProgressView.swift; sourceTree = "<group>"; };
-		4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
 		4DDE5C402D44FACE00BBF8AA /* DetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsView.swift; sourceTree = "<group>"; };
 		4DDE5C422D44FAEC00BBF8AA /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -75,7 +73,7 @@
 		4D1BDA002D4501F3009D0078 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				4D8642D62D4511DF00AC5D5C /* ApiService.swift */,
+				4D8642D62D4511DF00AC5D5C /* ApiEndpoints.swift */,
 				4DBD0C4E2D45332600BFB993 /* LocationManager.swift */,
 				4D62D4462D46398A00776401 /* WeatherService.swift */,
 			);
@@ -85,7 +83,6 @@
 		4D1BDA012D450210009D0078 /* Features */ = {
 			isa = PBXGroup;
 			children = (
-				4DDE5C3C2D44F98A00BBF8AA /* TabBarController.swift */,
 				4D62D44C2D463F5F00776401 /* TabBarCoordinator.swift */,
 				4D8642D22D45061D00AC5D5C /* Home */,
 				4D1BDA042D450228009D0078 /* Settings */,
@@ -259,12 +256,11 @@
 			files = (
 				4DDE5C3F2D44FABE00BBF8AA /* ListView.swift in Sources */,
 				4DDE5C412D44FACE00BBF8AA /* DetailsView.swift in Sources */,
-				4DDE5C3D2D44F98A00BBF8AA /* TabBarController.swift in Sources */,
 				4DDE5C432D44FAEC00BBF8AA /* SettingsView.swift in Sources */,
 				4DADD8272D44F76B0043628F /* WeatherAppApp.swift in Sources */,
 				4D1BDA062D4502B0009D0078 /* ListViewModel.swift in Sources */,
 				4D62D44B2D463F3800776401 /* AppCoordinator.swift in Sources */,
-				4D8642D72D4511DF00AC5D5C /* ApiService.swift in Sources */,
+				4D8642D72D4511DF00AC5D5C /* ApiEndpoints.swift in Sources */,
 				4D62D44D2D463F5F00776401 /* TabBarCoordinator.swift in Sources */,
 				4D8642D52D45062F00AC5D5C /* Forecast.swift in Sources */,
 				4DBD0C4F2D45332600BFB993 /* LocationManager.swift in Sources */,

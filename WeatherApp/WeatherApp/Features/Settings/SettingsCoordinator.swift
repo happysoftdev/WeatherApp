@@ -11,9 +11,8 @@ import SwiftUI
 
 class SettingsCoordinator {
     func start() -> UIViewController {
-        
         let viewModel = SettingsViewModel()
-        let settingsView = SettingsView2(viewModel: viewModel)
+        let settingsView = SettingsView(viewModel: viewModel)
         
         let hostingController = UIHostingController(rootView: settingsView)
 

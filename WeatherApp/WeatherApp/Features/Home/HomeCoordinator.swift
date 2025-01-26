@@ -9,12 +9,14 @@ import Foundation
 import UIKit
 import SwiftUI
 
-class HomeCoordinator {
+// List & details screens
+class HomeCoordinator: ObservableObject {
+    
+    @Published var navigationPath = NavigationPath()
     
     func start() -> UIViewController {
-        let viewModel = HomeViewModel()
-        let homeView = HomeView(viewModel: viewModel, coordinator: self)
-        
+//        let viewModel = HomeViewModel()
+        let homeView = ListView() //TODO: Add view model here to fetch data
         let hostingController = UIHostingController(rootView: homeView)
         
         hostingController.tabBarItem = UITabBarItem(
@@ -25,8 +27,15 @@ class HomeCoordinator {
         return hostingController
     }
     
-    func goToDetails(for item: String) -> DetailsView2 {
-        let detailsViewModel = DetailsViewModel(item: item)
-        return DetailsView2(viewModel: detailsViewModel)
+    func showDetails(for city: String) -> some View {
+        let viewModel = ForecastViewModel(weatherService: WeatherService())
+        viewModel.getWeather(for: city, unit: .celsius)
+        return DetailsView(viewModel: viewModel)
+    }
+    
+    func showDetails(for lat: Double, and lon: Double) -> some View {
+        let viewModel = ForecastViewModel(weatherService: WeatherService())
+        viewModel.getWeather(with: lat, and: lon, unit: .celsius)
+        return DetailsView(viewModel: viewModel)
     }
 }

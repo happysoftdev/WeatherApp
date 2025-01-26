@@ -6,50 +6,81 @@
 //
 
 import Foundation
+import Combine
 
-struct WeatherData: Decodable {
-    let temperature: Double
-    let description: String
+// DI -> mocking -> reusability
+protocol WeatherServiceProtocol: AnyObject {
+    func fetchWeather(for city: String, unit: String?) -> AnyPublisher<Forecast, Error>
+    func fetchWeather(with lat: Double, and lon: Double, unit: String?) -> AnyPublisher<Forecast, Error>
 }
 
-protocol WeatherServiceProtocol {
-    func fetchWeather(for city: String) async throws -> WeatherData
+class MockWeatherService: WeatherServiceProtocol {
+    
+    func fetchWeather(for city: String, unit: String? = "metric") -> AnyPublisher<Forecast, Error> {
+        let weatherForecast = Forecast.mock
+        return Just(weatherForecast)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchWeather(with lat: Double, and lon: Double, unit: String? = "metric") -> AnyPublisher<Forecast, Error> {
+        let weatherForecast = Forecast.mock
+        return Just(weatherForecast)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
 }
 
 class WeatherService: WeatherServiceProtocol {
-    func fetchWeather(for city: String) async throws -> WeatherData {
-        // Simulated network call
-        await Task.sleep(1_000_000_000) // 1 second delay
-        return WeatherData(temperature: 22.5, description: "Sunny")
+    
+    func fetchWeather(for city: String, unit: String? = "metric") -> AnyPublisher<Forecast, Error> {
+        let parameters: [URLQueryItem] = [
+            URLQueryItem(name: "q", value: city),
+            URLQueryItem(name: "units", value: unit)
+        ]
+        
+        let url = ApiEndpoints.weather(with: parameters)
+        return makeRequest(url: url, method: "GET", type: Forecast.self)
     }
-}
-
-@MainActor
-class WeatherViewModel: ObservableObject {
-    @Published var city: String = ""
-    @Published var temperature: String = ""
-    @Published var description: String = ""
-    @Published var isLoading: Bool = false
-
-    // DI
-    private let weatherService: WeatherServiceProtocol
-
-    // DI
-    init(weatherService: WeatherServiceProtocol) {
-        self.weatherService = weatherService
+    
+    func fetchWeather(with lat: Double, and lon: Double, unit: String? = "metric") -> AnyPublisher<Forecast, Error> {
+        let parameters: [URLQueryItem] = [
+            URLQueryItem(name: "lat", value: String(lat)),
+            URLQueryItem(name: "lon", value: String(lon)),
+            URLQueryItem(name: "units", value: unit)
+        ]
+        
+        let url = ApiEndpoints.weather(with: parameters)
+        return makeRequest(url: url, method: "GET", type: Forecast.self)
     }
-
-    func getWeather() async {
-        guard !city.isEmpty else { return }
-        isLoading = true
-        do {
-            let weather = try await weatherService.fetchWeather(for: city)
-            temperature = "\(weather.temperature)°C"
-            description = weather.description
-        } catch {
-            temperature = "Error"
-            description = "Could not fetch weather."
+    
+    private func makeRequest<T: Decodable>(url: URL?,
+                                           method: String,
+                                           body: Data? = nil,
+                                           type: T.Type) -> AnyPublisher<T, Error> {
+        guard let url = url else {
+            fatalError("Invalid URL")
         }
-        isLoading = false
+        
+        var request = URLRequest(url: url)
+        request.httpMethod = method
+        
+        // irrelevant for now
+        if let body = body {
+            request.httpBody = body
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+        
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                guard let response = output.response as? HTTPURLResponse,
+                      response.statusCode >= 200 && response.statusCode < 300 else {
+                    throw URLError(.badServerResponse)
+                }
+                return output.data
+            }
+            .decode(type: T.self, decoder: JSONDecoder())
+            .eraseToAnyPublisher()
     }
+    
 }
