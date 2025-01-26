@@ -11,6 +11,7 @@ import CoreLocation
 
 class ForecastViewModel: ObservableObject {
     @Published var forecast: Forecast? = nil // TODO: should use forecast data instead of the whole object
+    
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
     @Published var iconCode: String? = nil
@@ -36,9 +37,12 @@ class ForecastViewModel: ObservableObject {
            let forecastCache = cachedData.first(where: { $0.name ==  city}) {
             self.forecast = forecastCache.forecast
             self.isLoading = false
+            
+            setLastUpdatedAt()
+            setSunriseSunsetData()
         } else {
             // new request
-            weatherService.fetchWeather(for: city, unit: getMeasureUnit(from: unit))
+            weatherService.fetchWeather(for: city, unit: TemperatureUnitUtility.measureUnit(from: unit))
                 .receive(on: DispatchQueue.main)
                 .sink { [weak self] completion in
                     switch completion {
@@ -49,25 +53,26 @@ class ForecastViewModel: ObservableObject {
                         print("Success")
                     }
                 } receiveValue: { [weak self] response in
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.5) {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                         self?.isLoading = false
                         self?.forecast = response
                         self?.iconCode = response.weather.first?.icon
                         
                         let city = City(forecast: response)
                         CacheManager.shared.addCityCache(city)
+                        
+                        self?.setLastUpdatedAt()
+                        self?.setSunriseSunsetData()
                     }
                 } .store(in: &cancellables)
         }
-        setLastUpdatedAt()
-        setSunriseSunsetData()
     }
     
     func getWeather(lat: Double, lon: Double, unit: TemperatureUnit) {
         self.isLoading = true
         self.errorMessage = nil
         
-        weatherService.fetchWeather(with: lat, and: lon, unit: getMeasureUnit(from: unit))
+        weatherService.fetchWeather(with: lat, and: lon, unit: TemperatureUnitUtility.measureUnit(from: unit))
             .receive(on: DispatchQueue.main)
             .sink { [weak self] completion in
                 switch completion {
@@ -86,44 +91,17 @@ class ForecastViewModel: ObservableObject {
             } .store(in: &cancellables)
     }
     
-    func getMeasureUnit(from unit: TemperatureUnit) -> String {
-        if unit == .celsius {
-            return "metric"
-        } else {
-            return "imperial"
-        }
-    }
-    
-    //IMPROVEMENT: Move this to an outside utility class and test it
     func setLastUpdatedAt() {
         guard let timeInterval = self.forecast?.date else { return }
-        
-        let date = Date(timeIntervalSince1970: timeInterval)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .medium
-        dateFormatter.timeZone = TimeZone.current
-        
-        let formattedTime = dateFormatter.string(from: date)
-        self.lastUpdatedAt = formattedTime
+        self.lastUpdatedAt = TimeUtility.convertUnixTimestampToLocal(timestamp: timeInterval)
     }
     
     func setSunriseSunsetData() {
         guard let sunriseTimeinterval = self.forecast?.systemData.sunrise else { return }
         guard let sunsetTimeinterval = self.forecast?.systemData.sunset else { return }
         
-        let sunriseDate = Date(timeIntervalSince1970: sunriseTimeinterval)
-        let sunsetDate = Date(timeIntervalSince1970: sunsetTimeinterval)
-        
-        let dateFormatter = DateFormatter()
-        dateFormatter.timeStyle = .medium
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC") // because the API says so
-
-        let formattedSunriseTime = dateFormatter.string(from: sunriseDate)
-        self.sunrise = formattedSunriseTime
-        
-        let formattedSunsetTime = dateFormatter.string(from: sunsetDate)
-        self.sunset = formattedSunsetTime
+        self.sunrise = TimeUtility.convertUnixTimestampToUTC(timestamp: sunriseTimeinterval)
+        self.sunset = TimeUtility.convertUnixTimestampToUTC(timestamp: sunsetTimeinterval)
     }
 }
 

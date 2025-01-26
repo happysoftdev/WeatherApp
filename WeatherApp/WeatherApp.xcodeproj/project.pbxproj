@@ -23,6 +23,9 @@
 		4D881F912D4687B90039A9F8 /* WeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D881F902D4687B90039A9F8 /* WeatherAppTests.swift */; };
 		4D881F982D4688780039A9F8 /* ForecastViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D881F972D4688780039A9F8 /* ForecastViewModelTests.swift */; };
 		4D881F9A2D468A340039A9F8 /* ListViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D881F992D468A340039A9F8 /* ListViewModelTests.swift */; };
+		4D8D4FFF2D469CB100FEA93A /* TimeUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8D4FFE2D469CB100FEA93A /* TimeUtility.swift */; };
+		4D8D50012D469F9500FEA93A /* TemperatureUnitUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8D50002D469F9500FEA93A /* TemperatureUnitUtility.swift */; };
+		4D8D50032D46A10800FEA93A /* TimeUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D8D50022D46A10800FEA93A /* TimeUtilityTests.swift */; };
 		4DADD8272D44F76B0043628F /* WeatherAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DADD8262D44F76B0043628F /* WeatherAppApp.swift */; };
 		4DADD82B2D44F76D0043628F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82A2D44F76D0043628F /* Assets.xcassets */; };
 		4DADD82E2D44F76D0043628F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DADD82D2D44F76D0043628F /* Preview Assets.xcassets */; };
@@ -61,6 +64,9 @@
 		4D881F902D4687B90039A9F8 /* WeatherAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppTests.swift; sourceTree = "<group>"; };
 		4D881F972D4688780039A9F8 /* ForecastViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastViewModelTests.swift; sourceTree = "<group>"; };
 		4D881F992D468A340039A9F8 /* ListViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModelTests.swift; sourceTree = "<group>"; };
+		4D8D4FFE2D469CB100FEA93A /* TimeUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtility.swift; sourceTree = "<group>"; };
+		4D8D50002D469F9500FEA93A /* TemperatureUnitUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureUnitUtility.swift; sourceTree = "<group>"; };
+		4D8D50022D46A10800FEA93A /* TimeUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeUtilityTests.swift; sourceTree = "<group>"; };
 		4DADD8232D44F76B0043628F /* WeatherApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DADD8262D44F76B0043628F /* WeatherAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAppApp.swift; sourceTree = "<group>"; };
 		4DADD82A2D44F76D0043628F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -152,6 +158,8 @@
 			isa = PBXGroup;
 			children = (
 				4DC21C222D458AD900B6D124 /* CircularProgressView.swift */,
+				4D8D4FFE2D469CB100FEA93A /* TimeUtility.swift */,
+				4D8D50002D469F9500FEA93A /* TemperatureUnitUtility.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -183,6 +191,7 @@
 				4D881F902D4687B90039A9F8 /* WeatherAppTests.swift */,
 				4D881F972D4688780039A9F8 /* ForecastViewModelTests.swift */,
 				4D881F992D468A340039A9F8 /* ListViewModelTests.swift */,
+				4D8D50022D46A10800FEA93A /* TimeUtilityTests.swift */,
 			);
 			path = WeatherAppTests;
 			sourceTree = "<group>";
@@ -329,6 +338,7 @@
 				4D881F912D4687B90039A9F8 /* WeatherAppTests.swift in Sources */,
 				4D881F982D4688780039A9F8 /* ForecastViewModelTests.swift in Sources */,
 				4D881F9A2D468A340039A9F8 /* ListViewModelTests.swift in Sources */,
+				4D8D50032D46A10800FEA93A /* TimeUtilityTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -343,8 +353,10 @@
 				4DADD8272D44F76B0043628F /* WeatherAppApp.swift in Sources */,
 				4D1BDA062D4502B0009D0078 /* ListViewModel.swift in Sources */,
 				4D62D44B2D463F3800776401 /* AppCoordinator.swift in Sources */,
+				4D8D4FFF2D469CB100FEA93A /* TimeUtility.swift in Sources */,
 				4D8642D72D4511DF00AC5D5C /* ApiEndpoints.swift in Sources */,
 				4D62D44D2D463F5F00776401 /* TabBarCoordinator.swift in Sources */,
+				4D8D50012D469F9500FEA93A /* TemperatureUnitUtility.swift in Sources */,
 				4D8642D52D45062F00AC5D5C /* Forecast.swift in Sources */,
 				4DBD0C4F2D45332600BFB993 /* LocationManager.swift in Sources */,
 				4D42B78C2D457CBA001AD965 /* ForecastViewModel.swift in Sources */,

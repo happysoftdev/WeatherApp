@@ -20,6 +20,7 @@ struct ListView: View {
                 if viewModel.isLoading {
                     CircularProgressView()
                 } else {
+                    
                     List(viewModel.cities, id: \.name) { city in
                         NavigationLink(
                             destination: coordinator.showDetails(for: city.name)
