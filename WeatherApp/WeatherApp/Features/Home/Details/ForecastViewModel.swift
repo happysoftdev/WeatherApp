@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CoreLocation
+import SwiftUI
 
 class ForecastViewModel: ObservableObject {
     @Published var forecast: Forecast? = nil // TODO: should use forecast data instead of the whole object
@@ -20,6 +21,8 @@ class ForecastViewModel: ObservableObject {
     @Published var sunrise: String = ""
     @Published var lastUpdatedAt: String = ""
     
+    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
+    
     private var cancellables = Set<AnyCancellable>()
     private let weatherService: WeatherServiceProtocol
     
@@ -28,13 +31,18 @@ class ForecastViewModel: ObservableObject {
         self.weatherService = weatherService
     }
     
-    func getWeather(city: String, unit: TemperatureUnit) {
+    func getWeather(city: String) {
         self.isLoading = true
         self.errorMessage = nil
+        
+        let unit = unit //CacheManager.shared.getUnit() ?? .celsius
         
         // checking cache for this certain city
         if let cachedData = CacheManager.shared.getCitiesArray(),
            let forecastCache = cachedData.first(where: { $0.name ==  city}) {
+            
+            checkIfHasNewData()
+            
             self.forecast = forecastCache.forecast
             self.isLoading = false
             
@@ -68,9 +76,16 @@ class ForecastViewModel: ObservableObject {
         }
     }
     
-    func getWeather(lat: Double, lon: Double, unit: TemperatureUnit) {
+    private func checkIfHasNewData() {
+        // check if location is different
+        // IMPROVEMENT: background refresh to get data and check if there is new data + invalidate after a period of time
+    }
+    
+    func getWeather(lat: Double, lon: Double) {
         self.isLoading = true
         self.errorMessage = nil
+        
+        let unit = unit //CacheManager.shared.getUnit() ?? .celsius
         
         weatherService.fetchWeather(with: lat, and: lon, unit: TemperatureUnitUtility.measureUnit(from: unit))
             .receive(on: DispatchQueue.main)

@@ -10,6 +10,7 @@ import SwiftUI
 struct WeatherInfoView: View {
     @ObservedObject var viewModel: ForecastViewModel
     let textColor: Color = .white
+    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
     
     var body: some View {
         
@@ -21,13 +22,13 @@ struct WeatherInfoView: View {
                 .foregroundStyle(textColor)
             
             // Current Temperature
-            Text("\(Int((viewModel.forecast?.mainTemperature.temp) ?? 0))°C")
+            Text("\(Int((viewModel.forecast?.mainTemperature.temp) ?? 0))°\(unitString())")
                 .font(.system(size: 64))
                 .bold()
                 .foregroundStyle(textColor)
            
             // Feels like
-            Text("Feels like \(Int((viewModel.forecast?.mainTemperature.feelsLike) ?? 0))°C")
+            Text("Feels like \(Int((viewModel.forecast?.mainTemperature.feelsLike) ?? 0))°\(unitString())")
                 .font(.title2)
                 .foregroundStyle(textColor)
             
@@ -37,7 +38,7 @@ struct WeatherInfoView: View {
                     Text("Min")
                         .font(.caption)
                         .foregroundColor(textColor)
-                    Text("\(Int((viewModel.forecast?.mainTemperature.tempMin) ?? 0))°C")
+                    Text("\(Int((viewModel.forecast?.mainTemperature.tempMin) ?? 0))°\(unitString())")
                         .font(.headline)
                         .foregroundColor(textColor)
                 }
@@ -45,7 +46,7 @@ struct WeatherInfoView: View {
                     Text("Max")
                         .font(.caption)
                         .foregroundColor(textColor)
-                    Text("\(Int((viewModel.forecast?.mainTemperature.tempMax) ?? 0))°C")
+                    Text("\(Int((viewModel.forecast?.mainTemperature.tempMax) ?? 0))°\(unitString())")
                         .font(.headline)
                         .foregroundColor(textColor)
                 }
@@ -94,6 +95,11 @@ struct WeatherInfoView: View {
         }
         .padding()
     }
+    
+    func unitString() -> String {
+            return unit == .celsius ? "C" : "F"
+       
+    }
 }
 
 struct WeatherAdditionalDetailsView: View {
@@ -106,7 +112,7 @@ struct WeatherAdditionalDetailsView: View {
                 VStack(alignment: .leading) {
                     Text("Humidity")
                         .font(.headline)
-                    Text("\(String(describing: viewModel.forecast?.mainTemperature.humidity))%")
+                    Text("\(String(describing: viewModel.forecast?.mainTemperature.humidity ?? 0))%")
                         .font(.subheadline)
                 }
                 Spacer()

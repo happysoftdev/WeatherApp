@@ -14,6 +14,7 @@ class CacheManager {
     private let userDefaults = UserDefaults.standard
     private let cacheKey = "weatherCache"
     private let citiesCacheKey = "citiesCache"
+    private let temperatureUnitKey = "temperatureUnitKey"
     
     private init() {}
     
@@ -56,6 +57,12 @@ class CacheManager {
             self.cacheCitiesArray(newCacheArray)
         } else {
             self.cacheCitiesArray([city])
+        }
+    }
+    
+    func invalidateForecastArrayCache() {
+        if let cities = getCitiesArray() {
+            userDefaults.removeObject(forKey: citiesCacheKey)
         }
     }
 }

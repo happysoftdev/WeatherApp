@@ -8,32 +8,6 @@
 import SwiftUI
 import Combine
 
-//struct SettingsView: View {
-//    @Environment(\.colorScheme) private var colorScheme
-//    @StateObject var viewModel = SettingsViewModel()
-//
-//    var body: some View {
-//        NavigationStack {
-//            List {
-//                Section(header: Text("Temperature Unit")) {
-//                    Picker("Unit", selection: $viewModel.selectedUnit) {
-//                        ForEach(TemperatureUnit.allCases) { unit in
-//                            Text(unit.rawValue).tag(unit)
-//                        }
-//                    }
-//                    .pickerStyle(SegmentedPickerStyle())
-//                }
-//            }
-//            .listStyle(.plain)
-//            .background(colorScheme == .dark ? Color.black : Color.white)
-//            .navigationTitle("Settings")
-//            .padding()
-//        }
-//    }
-//}
-
-import SwiftUI
-
 struct SettingsView: View {
     @State private var isDarkModeEnabled = false
     @State private var notificationsEnabled = true
@@ -41,26 +15,11 @@ struct SettingsView: View {
     @Environment(\.colorScheme) private var colorScheme
     @StateObject var viewModel = SettingsViewModel()
     
+    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
+    
     var body: some View {
         NavigationView {
             List {
-                
-                // Profile Section
-                Section(header: Text("Profile")
-                    .font(.headline)
-                    .foregroundColor(.blue)
-                    .padding(.top, 20)) {
-                        NavigationLink(destination: Text("Privacy Settings")) {
-                            HStack {
-                                Image(systemName: "lock.fill")
-                                    .foregroundColor(.blue)
-                                Text("Privacy Settings")
-                                    .font(.body)
-                            }
-                        }
-                    }
-                
-                // Preferences Section
                 Section(header: Text("Preferences")
                     .font(.headline)
                     .foregroundColor(.blue)) {
@@ -88,7 +47,7 @@ struct SettingsView: View {
                                 Text("Temperature unit")
                                     .font(.body)
                             }
-                            Picker("Unit", selection: $viewModel.selectedUnit) {
+                            Picker("Unit", selection: $unit) {
                                 ForEach(TemperatureUnit.allCases) { unit in
                                     Text(unit.rawValue).tag(unit)
                                 }
@@ -100,6 +59,9 @@ struct SettingsView: View {
             .listStyle(GroupedListStyle())
             .navigationBarTitle("Settings", displayMode: .large)
             .background(Color.white)
+            .onChange(of: unit) {
+                CacheManager.shared.invalidateForecastArrayCache()
+            }
         }
         .accentColor(.blue)
     }

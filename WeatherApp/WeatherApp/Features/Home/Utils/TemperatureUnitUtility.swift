@@ -9,9 +9,9 @@ import Foundation
 
 
 // rawValue, .allCases, ForEach
-enum TemperatureUnit: String, CaseIterable, Identifiable {
-    case fahrenheit = "Fahrenheit"
+enum TemperatureUnit: String, CaseIterable, Identifiable, Codable {
     case celsius = "Celsius"
+    case fahrenheit = "Fahrenheit"
     
     // Identifiable
     var id: String { self.rawValue }

@@ -6,8 +6,6 @@
 //
 
 import SwiftUI
-import CoreLocation
-
 
 struct SimpleLineView: View {
     var body: some View {
@@ -26,7 +24,6 @@ struct SimpleLineView: View {
         }
     }
 }
-
 
 struct CustomBackgroundView: View {
     var body: some View {
