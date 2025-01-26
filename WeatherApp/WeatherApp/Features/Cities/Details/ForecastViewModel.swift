@@ -18,6 +18,11 @@ class ForecastViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private let apiService = ApiService.shared
     
+    // mocking
+    init(forecast: Forecast? = nil) {
+        self.forecast = forecast
+    }
+    
     func fetch(lat: Double? = nil, lon: Double? = nil, locationName: String? = nil, unit: String? = nil) {
         
         self.isLoading = true
@@ -66,4 +71,8 @@ class ForecastViewModel: ObservableObject {
                 }
             } .store(in: &cancellables)
     }
+}
+
+extension ForecastViewModel {
+    static let mock = ForecastViewModel(forecast: Forecast.mock)
 }

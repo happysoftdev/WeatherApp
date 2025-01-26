@@ -14,19 +14,11 @@ class ApiEndpoints {
     static let iconBaseURL = "https://openweathermap.org/img/wn/"
     
     static func iconURL(code: String) -> URL? {
-//        if var components = URLComponents(string: iconBaseURL) {
-//            components.queryItems = [
-//                URLQueryItem(name: "icon", value: code)
-//            ]
-//            return components.url
-//        } 
         var urlString = iconBaseURL
         urlString.append(contentsOf: "\(code).png")
-        
         return URL(string: urlString)
     }
     
-    // REFACTORING: use this - send query params from elsewhere because you want to get data using coordinates / city name
     static func weather(with queryParameters: [URLQueryItem]) -> URL? {
         if var components = URLComponents(string: baseURL) {
             var parameters = queryParameters

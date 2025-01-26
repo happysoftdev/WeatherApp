@@ -6,40 +6,6 @@
 //
 
 import SwiftUI
-struct WeatherInfoView: View {
-    @ObservedObject var viewModel: ForecastViewModel
-    
-    var body: some View {
-        VStack {
-            Text(viewModel.forecast?.name ?? "default title")
-                .font(.system(size: 32, weight: .medium, design: .default))
-                .foregroundStyle(.white)
-                .padding(.bottom, 16)
-            VStack(spacing: 10) {
-                
-                if let iconCode = viewModel.iconCode, let url = ApiEndpoints.iconURL(code: iconCode) {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                    } placeholder: {
-                        ProgressView()
-                    }
-                } else {
-                    Image(systemName: "cloud.sun.fill")
-                        .renderingMode(.original)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 100, height: 100)
-                }
-                Text(String(viewModel.forecast?.mainTemperature.temp ?? 0))
-                    .font(.system(size: 64, weight: .medium))
-                    .foregroundStyle(.white)
-            }
-        }
-    }
-}
 
 struct DetailsView: View {
     
@@ -56,7 +22,7 @@ struct DetailsView: View {
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
             .edgesIgnoringSafeArea(.all)
-            VStack {
+            VStack(alignment: .center) {
                 if viewModel.isLoading {
                     CircularProgressView()
                 } else if let errorMessage = viewModel.errorMessage {
