@@ -92,15 +92,15 @@ struct WeatherInfoView: View {
 }
 
 
-#Preview {
-    ZStack {
-        LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]),
-                       startPoint: .topLeading,
-                       endPoint: .bottomTrailing)
-        .edgesIgnoringSafeArea(.all)
-        WeatherInfoView(viewModel: ForecastViewModel.mock)
-    }
-}
+//#Preview {
+//    ZStack {
+//        LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]),
+//                       startPoint: .topLeading,
+//                       endPoint: .bottomTrailing)
+//        .edgesIgnoringSafeArea(.all)
+//        WeatherInfoView(viewModel: ForecastViewModel.mock)
+//    }
+//}
 
 struct WeatherAdditionalDetailsView: View {
     @ObservedObject var viewModel: ForecastViewModel

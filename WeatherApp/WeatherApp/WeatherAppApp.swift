@@ -16,11 +16,3 @@ struct WeatherAppApp: App {
         }
     }
 }
-
-struct AppCoordinator: UIViewControllerRepresentable {
-    func makeUIViewController(context: Context) -> TabBarController {
-        return TabBarController()
-    }
-    
-    func updateUIViewController(_ uiViewController: TabBarController, context: Context) {}
-}

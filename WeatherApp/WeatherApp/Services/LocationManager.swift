@@ -7,57 +7,41 @@
 
 import Foundation
 import CoreLocation
-
-final class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
-    
-    @Published var location: CLLocationCoordinate2D?
-    @Published var locationName: String?
-    @Published var error: String?
-    
-    private let locationManager = CLLocationManager()
+   
+class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
+    private var locationManager = CLLocationManager()
     private let geocoder = CLGeocoder()
+    
+    @Published var currentLocation: CLLocationCoordinate2D?
+    @Published var locationName: String?
+    @Published var error: Error?
     
     override init() {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-    }
-    
-    func requestLocation() {
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            DispatchQueue.main.async {
-                self.location = location.coordinate
-                self.fetchLocationName(for: location)
-            }
-        }
-        locationManager.stopUpdatingLocation()
+        guard let newLocation = locations.last else { return }
+        self.currentLocation = newLocation.coordinate
+        self.fetchLocationName(for: newLocation)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        DispatchQueue.main.async {
-            self.error = error.localizedDescription
-        }
+        print("Failed to get location: \(error.localizedDescription)")
+        self.error = error
     }
     
     private func fetchLocationName(for location: CLLocation) {
         geocoder.reverseGeocodeLocation(location) { [weak self] placemarks, error in
             if let error = error {
-                DispatchQueue.main.async {
-                    self?.error = error.localizedDescription
-                }
+                self?.error = error
             } else if let placemark = placemarks?.first {
-                DispatchQueue.main.async {
-                    self?.locationName = placemark.locality ?? "Unknown Location"
-                }
+                self?.locationName = placemark.locality ?? "Unknown Location"
             }
         }
     }
 }
-   
-        
-        
