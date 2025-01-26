@@ -89,6 +89,7 @@ struct WeatherInfoView: View {
             
             Text("Last updated at: \(viewModel.lastUpdatedAt)")
                 .font(.subheadline)
+                .fontWeight(.medium)
                 .foregroundStyle(textColor)
         }
         .padding()

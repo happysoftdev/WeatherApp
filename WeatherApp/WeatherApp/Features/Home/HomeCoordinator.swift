@@ -18,6 +18,7 @@ class HomeCoordinator: ObservableObject {
 //        let viewModel = HomeViewModel()
         let homeView = ListView() //TODO: Add view model here to fetch data
         let hostingController = UIHostingController(rootView: homeView)
+        hostingController.view.backgroundColor = .clear
         
         hostingController.tabBarItem = UITabBarItem(
             title: "Home",

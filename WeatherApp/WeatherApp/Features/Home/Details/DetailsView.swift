@@ -26,7 +26,7 @@ struct DetailsView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]),
+            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green.opacity(0.4)]),
                            startPoint: .topLeading,
                            endPoint: .bottomTrailing)
             .edgesIgnoringSafeArea(.all)
