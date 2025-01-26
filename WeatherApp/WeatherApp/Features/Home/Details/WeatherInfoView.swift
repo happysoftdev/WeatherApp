@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WeatherInfoView: View {
     @ObservedObject var viewModel: ForecastViewModel
-    @State var textColor: Color = .white
+    let textColor: Color = .white
     
     var body: some View {
         
@@ -86,21 +86,14 @@ struct WeatherInfoView: View {
             WeatherAdditionalDetailsView(viewModel: viewModel)
             
             Spacer()
+            
+            Text("Last updated at: \(viewModel.lastUpdatedAt)")
+                .font(.subheadline)
+                .foregroundStyle(textColor)
         }
         .padding()
     }
 }
-
-
-//#Preview {
-//    ZStack {
-//        LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green]),
-//                       startPoint: .topLeading,
-//                       endPoint: .bottomTrailing)
-//        .edgesIgnoringSafeArea(.all)
-//        WeatherInfoView(viewModel: ForecastViewModel.mock)
-//    }
-//}
 
 struct WeatherAdditionalDetailsView: View {
     @ObservedObject var viewModel: ForecastViewModel
@@ -128,19 +121,19 @@ struct WeatherAdditionalDetailsView: View {
             .cornerRadius(12)
             .shadow(radius: 5)
             
-            // TODO: Sunrise & Sunset - maybe a line between them
+            //IMPROVEMENT: Sunrise & Sunset - create a line between them
             HStack {
                 VStack(alignment: .leading) {
                     Text("Sunrise")
                         .font(.headline)
-                    Text("\(String(describing: viewModel.forecast?.mainTemperature.humidity))%")
+                    Text("\(String(describing: viewModel.sunrise))")
                         .font(.subheadline)
                 }
                 Spacer()
                 VStack(alignment: .leading) {
                     Text("Sunset")
                         .font(.headline)
-                    Text("\(viewModel.forecast?.wind.speed ?? 0, specifier: "%.1f") m/s")
+                    Text("\(String(describing: viewModel.sunset))")
                         .font(.subheadline)
                 }
             }
@@ -150,6 +143,7 @@ struct WeatherAdditionalDetailsView: View {
             .shadow(radius: 5)
             
             // TODO: Last updated at: dt
+            
         }
     }
 }
