@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4D1BDA062D4502B0009D0078 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D1BDA052D4502B0009D0078 /* ListViewModel.swift */; };
+		4D2824372D47A92C00779447 /* CityRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D2824362D47A92C00779447 /* CityRowView.swift */; };
 		4D35AF5A2D4668FA00B45F98 /* City.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D35AF592D4668FA00B45F98 /* City.swift */; };
 		4D3A671E2D47A5E2007524F1 /* WeatherAdditionalInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3A671D2D47A5E2007524F1 /* WeatherAdditionalInfoView.swift */; };
 		4D3A67202D47A612007524F1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3A671F2D47A612007524F1 /* Extensions.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		4D1BDA052D4502B0009D0078 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
+		4D2824362D47A92C00779447 /* CityRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityRowView.swift; sourceTree = "<group>"; };
 		4D35AF592D4668FA00B45F98 /* City.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = City.swift; sourceTree = "<group>"; };
 		4D3A671D2D47A5E2007524F1 /* WeatherAdditionalInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAdditionalInfoView.swift; sourceTree = "<group>"; };
 		4D3A671F2D47A612007524F1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				4DDE5C3E2D44FABE00BBF8AA /* ListView.swift */,
+				4D2824362D47A92C00779447 /* CityRowView.swift */,
 				4D1BDA052D4502B0009D0078 /* ListViewModel.swift */,
 			);
 			path = List;
@@ -356,6 +359,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D2824372D47A92C00779447 /* CityRowView.swift in Sources */,
 				4D3A67202D47A612007524F1 /* Extensions.swift in Sources */,
 				4DDE5C3F2D44FABE00BBF8AA /* ListView.swift in Sources */,
 				4DDE5C412D44FACE00BBF8AA /* DetailsView.swift in Sources */,

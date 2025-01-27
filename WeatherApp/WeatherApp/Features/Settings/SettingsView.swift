@@ -9,12 +9,7 @@ import SwiftUI
 import Combine
 
 struct SettingsView: View {
-    @State private var isDarkModeEnabled = false
-    @State private var notificationsEnabled = true
-    
-    @Environment(\.colorScheme) private var colorScheme
     @ObservedObject var viewModel: SettingsViewModel
-    
     @AppStorage("unit") private var unit: TemperatureUnit = .celsius
     
     var body: some View {
@@ -23,24 +18,6 @@ struct SettingsView: View {
                 Section(header: Text("Preferences")
                     .font(.headline)
                     .foregroundColor(.blue)) {
-                        Toggle(isOn: $isDarkModeEnabled) {
-                            HStack {
-                                Image(systemName: "moon.fill")
-                                    .foregroundColor(.blue)
-                                Text("Dark Mode")
-                                    .font(.body)
-                            }
-                        }
-                        
-                        Toggle(isOn: $notificationsEnabled) {
-                            HStack {
-                                Image(systemName: "bell.fill")
-                                    .foregroundColor(.blue)
-                                Text("Notifications")
-                                    .font(.body)
-                            }
-                        }
-                        
                         VStack(alignment: .leading) {
                             HStack {
                                 Image(systemName: "ruler.fill")
@@ -58,8 +35,9 @@ struct SettingsView: View {
                     }
             }
             .listStyle(GroupedListStyle())
+            .scrollContentBackground(.hidden)
+            .background(GradientBackgroundView().opacity(0.3))
             .navigationBarTitle("Settings", displayMode: .large)
-            .background(Color.white)
             .onChange(of: unit) {
                 CacheManager.shared.invalidateForecastArrayCache()
             }

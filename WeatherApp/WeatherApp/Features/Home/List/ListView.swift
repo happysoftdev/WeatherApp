@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ListView: View {
-    @Environment(\.colorScheme) private var colorScheme
     
     @ObservedObject var viewModel: ListViewModel
     @StateObject private var coordinator = HomeCoordinator()
@@ -35,32 +34,12 @@ struct ListView: View {
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
                 .listStyle(.insetGrouped)
-                .background(.clear)
             }
-            .background(.clear)
+            .background(GradientBackgroundView().opacity(0.3))
             .navigationBarTitle("Weather", displayMode: .large)
         }
-        .background(.clear)
         .accentColor(.white)
-    }
-}
-
-struct CityRowView: View {
-    let icon: String
-    let name: String
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .font(.system(size: 40))
-                .foregroundColor(.yellow)
-                .frame(width: 50, height: 50)
-            
-            VStack(alignment: .leading) {
-                Text(name)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-            }
-        }
     }
 }
