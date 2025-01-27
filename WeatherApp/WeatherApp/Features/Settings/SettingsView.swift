@@ -13,7 +13,7 @@ struct SettingsView: View {
     @State private var notificationsEnabled = true
     
     @Environment(\.colorScheme) private var colorScheme
-    @StateObject var viewModel = SettingsViewModel()
+    @ObservedObject var viewModel: SettingsViewModel
     
     @AppStorage("unit") private var unit: TemperatureUnit = .celsius
     
@@ -40,6 +40,7 @@ struct SettingsView: View {
                                     .font(.body)
                             }
                         }
+                        
                         VStack(alignment: .leading) {
                             HStack {
                                 Image(systemName: "ruler.fill")

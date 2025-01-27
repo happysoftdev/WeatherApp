@@ -14,7 +14,6 @@ class ListViewModel: ObservableObject {
     private var locationManager = LocationManager()
     
     @Published var cities: [City] = []
-    @Published var cachedCities: [City] = []
     
     @Published var currentLocation: City?
     @Published var defaultCities: [City] = [
@@ -22,20 +21,12 @@ class ListViewModel: ObservableObject {
         City(name: "Barcelona")
     ]
     
-    @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
-        loadCachedData()
         setupBindings()
-    }
-    
-    func loadCachedData() {
-        if let cachedData = CacheManager.shared.getCitiesArray() {
-            self.cachedCities = cachedData
-        }
     }
     
     private func setupBindings() {

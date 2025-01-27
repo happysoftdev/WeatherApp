@@ -11,12 +11,11 @@ import SwiftUI
 
 // List & details screens
 class HomeCoordinator: ObservableObject {
-    
     @Published var navigationPath = NavigationPath()
     
     func start() -> UIViewController {
-//        let viewModel = HomeViewModel()
-        let homeView = ListView() //TODO: Add view model here to fetch data
+        let viewModel = ListViewModel()
+        let homeView = ListView(viewModel: viewModel)
         
         let hostingController = UIHostingController(rootView: homeView)
         hostingController.view.backgroundColor = .clear
