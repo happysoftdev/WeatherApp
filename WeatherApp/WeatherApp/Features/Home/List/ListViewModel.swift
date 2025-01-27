@@ -13,29 +13,18 @@ import SwiftUI
 class ListViewModel: ObservableObject {
     private var locationManager = LocationManager()
     
-    @Published var cities: [City] = []
-    @Published var cachedCities: [City] = []
-    
     @Published var currentLocation: City?
     @Published var defaultCities: [City] = [
         City(name: "London"),
         City(name: "Barcelona")
     ]
     
-    @Published var isLoading: Bool = false
     @Published var errorMessage: String? = nil
     
     private var cancellables: Set<AnyCancellable> = []
     
     init() {
-        loadCachedData()
         setupBindings()
-    }
-    
-    func loadCachedData() {
-        if let cachedData = CacheManager.shared.getCitiesArray() {
-            self.cachedCities = cachedData
-        }
     }
     
     private func setupBindings() {
@@ -52,15 +41,10 @@ class ListViewModel: ObservableObject {
             .combineLatest(locationNamePublisher)
             .sink { [weak self] (location, name) in
                 guard let location = location, let name = name else { return }
-                self?.fetchWeather(for: location, with: name)
+                self?.currentLocation = City(name: name)
+                self?.errorMessage = nil
             }
             .store(in: &cancellables)
-    }
-    
-    func fetchWeather(for location: CLLocationCoordinate2D, with name: String) {
-        let currentCity = City(name: name)
-        currentLocation = currentCity
-        errorMessage = nil
     }
     
     func getWeatherIconName(for city: City) -> String {

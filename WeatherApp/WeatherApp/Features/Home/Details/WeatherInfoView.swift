@@ -9,46 +9,30 @@ import SwiftUI
 
 struct WeatherInfoView: View {
     @ObservedObject var viewModel: ForecastViewModel
-    let textColor: Color = .white
-    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
     
     var body: some View {
         
         VStack(spacing: 20) {
             // Location Name
-            Text(viewModel.forecast?.name ?? "No location")
-                .font(.largeTitle)
+            textView(text: viewModel.locationName, font: .largeTitle)
                 .bold()
-                .foregroundStyle(textColor)
             
             // Current Temperature
-            Text("\(Int((viewModel.forecast?.mainTemperature.temp) ?? 0))°\(unitString())")
-                .font(.system(size: 64))
+            textView(text: viewModel.temperature, font: .system(size: 64))
                 .bold()
-                .foregroundStyle(textColor)
-           
+            
             // Feels like
-            Text("Feels like \(Int((viewModel.forecast?.mainTemperature.feelsLike) ?? 0))°\(unitString())")
-                .font(.title2)
-                .foregroundStyle(textColor)
+            textView(text: viewModel.feelsLike, font: .title2)
             
             // Min & Max
             HStack {
-                VStack {
-                    Text("Min")
-                        .font(.caption)
-                        .foregroundColor(textColor)
-                    Text("\(Int((viewModel.forecast?.mainTemperature.tempMin) ?? 0))°\(unitString())")
-                        .font(.headline)
-                        .foregroundColor(textColor)
+                VStack(alignment: .leading) {
+                    textView(text: "Min", font: .caption)
+                    textView(text: viewModel.minTemp, font: .headline)
                 }
-                VStack {
-                    Text("Max")
-                        .font(.caption)
-                        .foregroundColor(textColor)
-                    Text("\(Int((viewModel.forecast?.mainTemperature.tempMax) ?? 0))°\(unitString())")
-                        .font(.headline)
-                        .foregroundColor(textColor)
+                VStack(alignment: .trailing) {
+                    textView(text: "Max", font: .caption)
+                    textView(text: viewModel.maxTemp, font: .headline)
                 }
             }
             .padding()
@@ -57,14 +41,10 @@ struct WeatherInfoView: View {
             .shadow(radius: 5)
             
             // Weather Condition
-            Text(viewModel.forecast?.weather.first?.main ?? "")
-                .font(.title2)
-                .foregroundStyle(textColor)
+            textView(text: viewModel.condition, font: .title2)
             
             // Weather Condition
-            Text(viewModel.forecast?.weather.first?.description ?? "")
-                .font(.title2)
-                .foregroundStyle(textColor)
+            textView(text: viewModel.conditionDescription, font: .title2)
             
             // Weather Icon
             if let iconCode = viewModel.iconCode, let url = ApiEndpoints.iconURL(code: iconCode) {
@@ -81,76 +61,19 @@ struct WeatherInfoView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 100, height: 100)
-                    .foregroundStyle(textColor)
+                    .foregroundStyle(.white)
             }
             
-            WeatherAdditionalDetailsView(viewModel: viewModel)
+            WeatherAdditionalInfoView(viewModel: viewModel)
             
             Spacer()
-            
-            Text("Last updated at: \(viewModel.lastUpdatedAt)")
-                .font(.subheadline)
+            textView(text: "Last updated at: \(viewModel.lastUpdatedAt)", font: .subheadline)
                 .fontWeight(.medium)
-                .foregroundStyle(textColor)
         }
         .padding()
     }
-    
-    func unitString() -> String {
-            return unit == .celsius ? "C" : "F"
-       
-    }
 }
 
-struct WeatherAdditionalDetailsView: View {
-    @ObservedObject var viewModel: ForecastViewModel
-    var body: some View {
-        VStack {
-            
-            // Humidity & Wind speed
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Humidity")
-                        .font(.headline)
-                    Text("\(String(describing: viewModel.forecast?.mainTemperature.humidity ?? 0))%")
-                        .font(.subheadline)
-                }
-                Spacer()
-                VStack(alignment: .leading) {
-                    Text("Wind Speed")
-                        .font(.headline)
-                    Text("\(viewModel.forecast?.wind.speed ?? 0, specifier: "%.1f") m/s")
-                        .font(.subheadline)
-                }
-            }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
-            .shadow(radius: 5)
-            
-            //IMPROVEMENT: Sunrise & Sunset - create a line between them
-            HStack {
-                VStack(alignment: .leading) {
-                    Text("Sunrise")
-                        .font(.headline)
-                    Text("\(String(describing: viewModel.sunrise))")
-                        .font(.subheadline)
-                }
-                Spacer()
-                VStack(alignment: .leading) {
-                    Text("Sunset")
-                        .font(.headline)
-                    Text("\(String(describing: viewModel.sunset))")
-                        .font(.subheadline)
-                }
-            }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
-            .shadow(radius: 5)
-            
-            // TODO: Last updated at: dt
-            
-        }
-    }
+#Preview {
+    WeatherInfoView(viewModel: .mock)
 }

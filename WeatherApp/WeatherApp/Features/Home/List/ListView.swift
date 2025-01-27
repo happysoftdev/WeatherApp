@@ -7,40 +7,9 @@
 
 import SwiftUI
 
-struct SimpleLineView: View {
-    var body: some View {
-        VStack {
-            // Line at the top of the screen
-            Rectangle()
-                .frame(height: 2) // Set the height of the line (thin)
-                .foregroundColor(.blue) // Choose a color for the line
-                .edgesIgnoringSafeArea(.horizontal) // Make it span across the full width of the screen
-            
-            Spacer() // Spacer to push content down
-            
-            // Content below the line
-            Text("Below the line")
-                .font(.title)
-        }
-    }
-}
-
-struct CustomBackgroundView: View {
-    var body: some View {
-        LinearGradient(gradient:
-                        Gradient(colors: [Color.yellow, Color.green, Color.blue]),
-                       startPoint: .topLeading,
-                       endPoint: .bottomTrailing
-        )
-        .edgesIgnoringSafeArea(.all)
-        
-    }
-}
-
 struct ListView: View {
-    @Environment(\.colorScheme) private var colorScheme
     
-    @StateObject private var viewModel = ListViewModel()
+    @ObservedObject var viewModel: ListViewModel
     @StateObject private var coordinator = HomeCoordinator()
     
     var body: some View {
@@ -65,32 +34,12 @@ struct ListView: View {
                         }
                     }
                 }
+                .scrollContentBackground(.hidden)
                 .listStyle(.insetGrouped)
-                .background(.clear)
             }
-            .background(.clear)
+            .background(GradientBackgroundView().opacity(0.3))
             .navigationBarTitle("Weather", displayMode: .large)
         }
-        .background(.clear)
         .accentColor(.white)
-    }
-}
-
-struct CityRowView: View {
-    let icon: String
-    let name: String
-    var body: some View {
-        HStack {
-            Image(systemName: icon)
-                .font(.system(size: 40))
-                .foregroundColor(.yellow)
-                .frame(width: 50, height: 50)
-            
-            VStack(alignment: .leading) {
-                Text(name)
-                    .font(.headline)
-                    .foregroundColor(.primary)
-            }
-        }
     }
 }

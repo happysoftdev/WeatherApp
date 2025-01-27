@@ -9,13 +9,14 @@ import SwiftUI
 
 struct DetailsView: View {
     
-    @StateObject var viewModel = ForecastViewModel()
+    @StateObject var viewModel: ForecastViewModel
     
-    //TODO: Move these somewhere else
+    // set up by HomeCoordinator
     var city: String? = nil
     var latitude: Double? = nil
     var longitude: Double? = nil
     
+    // called by HomeCoordinator
     init(viewModel: ForecastViewModel, city: String? = nil, latitude: Double? = nil, longitude: Double? = nil) {
         self._viewModel = StateObject(wrappedValue: viewModel)
         self.city = city
@@ -25,16 +26,13 @@ struct DetailsView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green.opacity(0.4)]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing)
-            .edgesIgnoringSafeArea(.all)
+            GradientBackgroundView()
             
             VStack(alignment: .center) {
                 if viewModel.isLoading {
                     CircularProgressView()
                 } else if let errorMessage = viewModel.errorMessage {
-                    Text("Error: \(errorMessage)")
+                    Text(errorMessage)
                         .font(.callout)
                 } else {
                     WeatherInfoView(viewModel: viewModel)
@@ -42,24 +40,14 @@ struct DetailsView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Current Weather")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                    textView(text: "Current Weather", font: .headline)
                 }
             }
             .tint(.white)
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                fetchData()
+                viewModel.fetchData(lat: latitude, lon: longitude, city: city)
             }
-        }
-    }
-    
-    private func fetchData() {
-        if let city = city {
-            viewModel.getWeather(city: city)
-        } else if let lat = latitude, let lon = longitude {
-            viewModel.getWeather(lat: lat, lon: lon)
         }
     }
 }
