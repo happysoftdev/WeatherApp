@@ -65,7 +65,6 @@ class WeatherService: WeatherServiceProtocol {
         var request = URLRequest(url: url)
         request.httpMethod = method
         
-        // irrelevant for now
         if let body = body {
             request.httpBody = body
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")

@@ -7,11 +7,19 @@
 
 import SwiftUI
 
+struct GradientBackgroundView: View {
+    var body: some View {
+        LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green.opacity(0.4)]),
+                       startPoint: .topLeading,
+                       endPoint: .bottomTrailing)
+        .edgesIgnoringSafeArea(.all)
+    }
+}
+
 struct DetailsView: View {
     
     @StateObject var viewModel = ForecastViewModel()
     
-    //TODO: Move these somewhere else
     var city: String? = nil
     var latitude: Double? = nil
     var longitude: Double? = nil
@@ -25,11 +33,7 @@ struct DetailsView: View {
     
     var body: some View {
         ZStack {
-            LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green.opacity(0.4)]),
-                           startPoint: .topLeading,
-                           endPoint: .bottomTrailing)
-            .edgesIgnoringSafeArea(.all)
-            
+            GradientBackgroundView()
             VStack(alignment: .center) {
                 if viewModel.isLoading {
                     CircularProgressView()
@@ -50,16 +54,8 @@ struct DetailsView: View {
             .tint(.white)
             .navigationBarTitleDisplayMode(.inline)
             .onAppear {
-                fetchData()
+                viewModel.fetchData(lat: latitude, lon: longitude, city: city)
             }
-        }
-    }
-    
-    private func fetchData() {
-        if let city = city {
-            viewModel.getWeather(city: city)
-        } else if let lat = latitude, let lon = longitude {
-            viewModel.getWeather(lat: lat, lon: lon)
         }
     }
 }

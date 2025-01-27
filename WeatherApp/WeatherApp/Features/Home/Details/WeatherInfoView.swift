@@ -9,31 +9,30 @@ import SwiftUI
 
 struct WeatherInfoView: View {
     @ObservedObject var viewModel: ForecastViewModel
-    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
     
     var body: some View {
         
         VStack(spacing: 20) {
             // Location Name
-            textView(text: viewModel.forecast?.name ?? "No location", font: .largeTitle)
+            textView(text: viewModel.locationName, font: .largeTitle)
                 .bold()
             
             // Current Temperature
-            textView(text: "\(Int((viewModel.forecast?.mainTemperature.temp) ?? 0))°\(unitString())", font: .system(size: 64))
+            textView(text: viewModel.temperature, font: .system(size: 64))
                 .bold()
             
             // Feels like
-            textView(text:" Feels like \(Int((viewModel.forecast?.mainTemperature.feelsLike) ?? 0))°\(unitString())", font: .title2)
-            
-            // Min & Max
+            textView(text: viewModel.feelsLike, font: .title2)
+
+//            // Min & Max
             HStack {
-                VStack {
+                VStack(alignment: .leading) {
                     textView(text: "Min", font: .caption)
-                    textView(text: "\(Int((viewModel.forecast?.mainTemperature.tempMin) ?? 0))°\(unitString())", font: .headline)
+                    textView(text: viewModel.minTemp, font: .headline)
                 }
-                VStack {
+                VStack(alignment: .trailing) {
                     textView(text: "Max", font: .caption)
-                    textView(text: "\(Int((viewModel.forecast?.mainTemperature.tempMax) ?? 0))°\(unitString())", font: .headline)
+                    textView(text: viewModel.maxTemp, font: .headline)
                 }
             }
             .padding()
@@ -42,10 +41,10 @@ struct WeatherInfoView: View {
             .shadow(radius: 5)
             
             // Weather Condition
-            textView(text: viewModel.forecast?.weather.first?.main ?? "", font: .title2)
+            textView(text: viewModel.condition, font: .title2)
             
             // Weather Condition
-            textView(text: viewModel.forecast?.weather.first?.description ?? "", font: .title2)
+            textView(text: viewModel.conditionDescription, font: .title2)
             
             // Weather Icon
             if let iconCode = viewModel.iconCode, let url = ApiEndpoints.iconURL(code: iconCode) {
@@ -74,7 +73,7 @@ struct WeatherInfoView: View {
         .padding()
     }
     
-    func unitString() -> String { return unit == .celsius ? "C" : "F" }
+   
 }
 
 extension View {
@@ -93,17 +92,13 @@ struct WeatherAdditionalDetailsView: View {
             // Humidity & Wind speed
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Humidity")
-                        .font(.headline)
-                    Text("\(String(describing: viewModel.forecast?.mainTemperature.humidity ?? 0))%")
-                        .font(.subheadline)
+                    textView(text: "Humidity", font: .headline, textColor: .black)
+                    textView(text: viewModel.humidity, font: .subheadline, textColor: .black)
                 }
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text("Wind Speed")
-                        .font(.headline)
-                    Text("\(viewModel.forecast?.wind.speed ?? 0, specifier: "%.1f") m/s")
-                        .font(.subheadline)
+                    textView(text: "Wind Speed", font: .headline, textColor: .black)
+                    textView(text: viewModel.windSpeed, font: .subheadline, textColor: .black)
                 }
             }
             .padding()
@@ -114,17 +109,13 @@ struct WeatherAdditionalDetailsView: View {
             //IMPROVEMENT: Sunrise & Sunset - create a line between them
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Sunrise")
-                        .font(.headline)
-                    Text("\(String(describing: viewModel.sunrise))")
-                        .font(.subheadline)
+                    textView(text: "Sunrise", font: .headline, textColor: .black)
+                    textView(text: viewModel.sunrise, font: .subheadline, textColor: .black)
                 }
                 Spacer()
                 VStack(alignment: .leading) {
-                    Text("Sunset")
-                        .font(.headline)
-                    Text("\(String(describing: viewModel.sunset))")
-                        .font(.subheadline)
+                    textView(text: "Sunset", font: .headline, textColor: .black)
+                    textView(text: viewModel.sunset, font: .subheadline, textColor: .black)
                 }
             }
             .padding()
