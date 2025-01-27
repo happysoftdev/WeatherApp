@@ -7,15 +7,6 @@
 
 import SwiftUI
 
-struct GradientBackgroundView: View {
-    var body: some View {
-        LinearGradient(gradient: Gradient(colors: [Color.blue, Color.green.opacity(0.4)]),
-                       startPoint: .topLeading,
-                       endPoint: .bottomTrailing)
-        .edgesIgnoringSafeArea(.all)
-    }
-}
-
 struct DetailsView: View {
     
     @StateObject var viewModel = ForecastViewModel()
@@ -38,7 +29,7 @@ struct DetailsView: View {
                 if viewModel.isLoading {
                     CircularProgressView()
                 } else if let errorMessage = viewModel.errorMessage {
-                    Text("Error: \(errorMessage)")
+                    Text(errorMessage)
                         .font(.callout)
                 } else {
                     WeatherInfoView(viewModel: viewModel)

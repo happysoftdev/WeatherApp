@@ -23,8 +23,8 @@ struct WeatherInfoView: View {
             
             // Feels like
             textView(text: viewModel.feelsLike, font: .title2)
-
-//            // Min & Max
+            
+            // Min & Max
             HStack {
                 VStack(alignment: .leading) {
                     textView(text: "Min", font: .caption)
@@ -64,7 +64,7 @@ struct WeatherInfoView: View {
                     .foregroundStyle(.white)
             }
             
-            WeatherAdditionalDetailsView(viewModel: viewModel)
+            WeatherAdditionalInfoView(viewModel: viewModel)
             
             Spacer()
             textView(text: "Last updated at: \(viewModel.lastUpdatedAt)", font: .subheadline)
@@ -72,56 +72,8 @@ struct WeatherInfoView: View {
         }
         .padding()
     }
-    
-   
 }
 
-extension View {
-    @ViewBuilder
-    func textView(text: String, font: Font, textColor: Color = .white) -> Text {
-        Text(text)
-            .font(font)
-            .foregroundColor(textColor)
-    }
-}
-
-struct WeatherAdditionalDetailsView: View {
-    @ObservedObject var viewModel: ForecastViewModel
-    var body: some View {
-        VStack {
-            // Humidity & Wind speed
-            HStack {
-                VStack(alignment: .leading) {
-                    textView(text: "Humidity", font: .headline, textColor: .black)
-                    textView(text: viewModel.humidity, font: .subheadline, textColor: .black)
-                }
-                Spacer()
-                VStack(alignment: .trailing) {
-                    textView(text: "Wind Speed", font: .headline, textColor: .black)
-                    textView(text: viewModel.windSpeed, font: .subheadline, textColor: .black)
-                }
-            }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
-            .shadow(radius: 5)
-            
-            //IMPROVEMENT: Sunrise & Sunset - create a line between them
-            HStack {
-                VStack(alignment: .leading) {
-                    textView(text: "Sunrise", font: .headline, textColor: .black)
-                    textView(text: viewModel.sunrise, font: .subheadline, textColor: .black)
-                }
-                Spacer()
-                VStack(alignment: .leading) {
-                    textView(text: "Sunset", font: .headline, textColor: .black)
-                    textView(text: viewModel.sunset, font: .subheadline, textColor: .black)
-                }
-            }
-            .padding()
-            .background(Color(.secondarySystemBackground))
-            .cornerRadius(12)
-            .shadow(radius: 5)
-        }
-    }
+#Preview {
+    WeatherInfoView(viewModel: .mock)
 }

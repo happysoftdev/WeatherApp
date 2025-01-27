@@ -7,26 +7,9 @@
 
 import Foundation
 import Combine
-import CoreLocation
 import SwiftUI
 
 class ForecastViewModel: ObservableObject {
-    private var forecast: Forecast? {
-        didSet {
-            if let forecast {
-                updateData(with: forecast)
-            }
-        }
-    }
-    
-    private var temperatureFormat: String {
-        return "%.0f°\(unitString())"
-    }
-    
-    private var speedFormat: String {
-        return "%.1f m/s"
-    }
-    
     @Published var isLoading = false
     @Published var errorMessage: String? = nil
     @Published var iconCode: String? = nil
@@ -48,6 +31,22 @@ class ForecastViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     private let weatherService: WeatherServiceProtocol
+    
+    private var forecast: Forecast? {
+        didSet {
+            if let forecast {
+                updateData(with: forecast)
+            }
+        }
+    }
+    
+    private var temperatureFormat: String {
+        return "%.0f°\(unitString())"
+    }
+    
+    private var speedFormat: String {
+        return "%.1f m/s"
+    }
     
     init(weatherService: WeatherServiceProtocol = WeatherService()) {
         self.weatherService = weatherService
