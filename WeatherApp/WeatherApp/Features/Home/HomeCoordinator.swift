@@ -33,8 +33,8 @@ class HomeCoordinator: ObservableObject {
         return DetailsView(viewModel: viewModel, city: city)
     }
     
-    func showDetails(for lat: Double, and lon: Double) -> some View {
+    func showDetails(for lat: Double, and lon: Double, locationName: String? = nil) -> some View {
         let viewModel = ForecastViewModel(weatherService: WeatherService())
-        return DetailsView(viewModel: viewModel, latitude: lat, longitude: lon)
+        return DetailsView(viewModel: viewModel, city: locationName, latitude: lat, longitude: lon)
     }
 }

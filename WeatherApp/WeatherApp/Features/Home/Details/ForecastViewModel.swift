@@ -60,15 +60,15 @@ class ForecastViewModel: ObservableObject {
         // check cache
         if let cachedData = CacheManager.shared.getCitiesArray(),
            !locationName.isEmpty,
-           let forecastDataCache = cachedData.first(where: { $0.name ==  locationName}),
+           let forecastDataCache = cachedData.first(where: { $0.name ==  locationName }),
            let forecast = forecastDataCache.forecast {
             self.isLoading = false
             self.forecast = forecast // load data from cache
         } else {
-            if let city = city {
-                getWeather(city: city)
-            } else if let lat = lat, let lon = lon {
+            if let lat = lat, let lon = lon {
                 getWeather(lat: lat, lon: lon)
+            } else if let city = city {
+                getWeather(city: city)
             }
         }
     }
