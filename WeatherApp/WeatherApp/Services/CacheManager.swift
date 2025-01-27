@@ -52,16 +52,27 @@ class CacheManager {
     
     func addCityCache(_ city: City) {
         if let existingCacheArray = getCitiesArray() {
-            var newCacheArray = existingCacheArray
-            newCacheArray.append(city)
-            self.cacheCitiesArray(newCacheArray)
+            
+            if let existingCachedCity = existingCacheArray.last(where: { $0.name == city.name })  {
+                
+                // replace cache
+                var newCacheArray = existingCacheArray // to be cached later
+                newCacheArray.removeAll(where: { $0.name == city.name })
+                newCacheArray.append(city)
+                self.cacheCitiesArray(newCacheArray)
+            } else {
+                // append
+                var newCacheArray = existingCacheArray
+                newCacheArray.append(city)
+                self.cacheCitiesArray(newCacheArray)
+            }
         } else {
             self.cacheCitiesArray([city])
         }
     }
     
     func invalidateForecastArrayCache() {
-        if let cities = getCitiesArray() {
+        if let _ = getCitiesArray() {
             userDefaults.removeObject(forKey: citiesCacheKey)
         }
     }

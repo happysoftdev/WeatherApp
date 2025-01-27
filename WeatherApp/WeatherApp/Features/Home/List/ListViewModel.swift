@@ -19,6 +19,9 @@ class ListViewModel: ObservableObject {
         City(name: "Barcelona")
     ]
     
+    @Published var latitude: Double?
+    @Published var longitude: Double?
+    
     @Published var errorMessage: String? = nil
     
     private var cancellables: Set<AnyCancellable> = []
@@ -41,6 +44,8 @@ class ListViewModel: ObservableObject {
             .combineLatest(locationNamePublisher)
             .sink { [weak self] (location, name) in
                 guard let location = location, let name = name else { return }
+                self?.latitude = location.latitude
+                self?.longitude = location.longitude
                 self?.currentLocation = City(name: name)
                 self?.errorMessage = nil
             }

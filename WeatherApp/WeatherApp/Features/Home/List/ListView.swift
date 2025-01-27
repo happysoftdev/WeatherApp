@@ -16,9 +16,11 @@ struct ListView: View {
         NavigationStack(path: $coordinator.navigationPath) {
             VStack {
                 List {
-                    if let currentLocation = viewModel.currentLocation {
+                    if let latitude = viewModel.latitude,
+                       let longitude = viewModel.longitude,
+                       let currentLocation = viewModel.currentLocation {
                         Section("Your location") {
-                            NavigationLink(destination: coordinator.showDetails(for: currentLocation.name)) {
+                            NavigationLink(destination: coordinator.showDetails(for: latitude, and: longitude, locationName: currentLocation.name)) {
                                 CityRowView(icon: viewModel.getWeatherIconName(for: currentLocation),
                                             name: currentLocation.name)
                                 .padding(.vertical, 5)

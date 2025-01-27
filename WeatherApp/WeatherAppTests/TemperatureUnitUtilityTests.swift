@@ -25,4 +25,14 @@ final class TemperatureUnitUtilityTests: XCTestCase {
         XCTAssertFalse(stringUnit.isEmpty)
         XCTAssertEqual(stringUnit, "imperial")
     }
+    
+    func testIdFahrenheit() {
+        let unit = TemperatureUnit.fahrenheit
+        XCTAssertEqual(unit.id, "Fahrenheit")
+    }
+    
+    func testIdCelsius() {
+        let unit = TemperatureUnit.celsius
+        XCTAssertEqual(unit.id, "Celsius")
+    }
 }
