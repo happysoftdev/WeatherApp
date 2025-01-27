@@ -9,6 +9,7 @@ import SwiftUI
 
 struct WeatherAdditionalInfoView: View {
     @ObservedObject var viewModel: ForecastViewModel
+    
     var body: some View {
         VStack {
             // Humidity & Wind speed

@@ -18,9 +18,7 @@ struct CityRowView: View {
                 .frame(width: 50, height: 50)
             
             VStack(alignment: .leading) {
-                Text(name)
-                    .font(.headline)
-                    .foregroundColor(.primary)
+                textView(text: name, font: .headline, textColor: .black)
             }
         }
     }

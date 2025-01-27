@@ -9,12 +9,14 @@ import SwiftUI
 
 struct DetailsView: View {
     
-    @StateObject var viewModel = ForecastViewModel()
+    @StateObject var viewModel: ForecastViewModel
     
+    // set up by HomeCoordinator
     var city: String? = nil
     var latitude: Double? = nil
     var longitude: Double? = nil
     
+    // called by HomeCoordinator
     init(viewModel: ForecastViewModel, city: String? = nil, latitude: Double? = nil, longitude: Double? = nil) {
         self._viewModel = StateObject(wrappedValue: viewModel)
         self.city = city
@@ -25,6 +27,7 @@ struct DetailsView: View {
     var body: some View {
         ZStack {
             GradientBackgroundView()
+            
             VStack(alignment: .center) {
                 if viewModel.isLoading {
                     CircularProgressView()
@@ -37,9 +40,7 @@ struct DetailsView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .principal) {
-                    Text("Current Weather")
-                        .font(.headline)
-                        .foregroundColor(.white)
+                    textView(text: "Current Weather", font: .headline)
                 }
             }
             .tint(.white)
