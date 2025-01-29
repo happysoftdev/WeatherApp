@@ -27,7 +27,7 @@ class ForecastViewModel: ObservableObject {
     @Published var sunrise: String = ""
     @Published var lastUpdatedAt: String = ""
     
-    @AppStorage("unit") private var unit: TemperatureUnit = .celsius
+    @AppStorage("unit") var unit: TemperatureUnit = .celsius
     
     private var cancellables = Set<AnyCancellable>()
     private let weatherService: WeatherServiceProtocol
@@ -68,7 +68,10 @@ class ForecastViewModel: ObservableObject {
             if let lat = lat, let lon = lon {
                 getWeather(lat: lat, lon: lon)
             } else if let city = city {
+                // IMPROVEMENT: check if you can use the location set in locationName
                 getWeather(city: city)
+            } else {
+                self.errorMessage = "Please choose a city / use your location"
             }
         }
     }
@@ -116,10 +119,10 @@ class ForecastViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    private func checkIfHasNewData() {
-        // check if location is different
-        // IMPROVEMENT: background refresh to get data and check if there is new data + invalidate after a period of time
-    }
+//    private func checkIfHasNewData() {
+//        // check if location is different
+//        // IMPROVEMENT: background refresh to get data and check if there is new data + invalidate after a period of time
+//    }
     
     func setLastUpdatedAt(for forecast: Forecast) {
         let timeInterval = forecast.date
