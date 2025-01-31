@@ -216,5 +216,6 @@ final class ForecastViewModelTests: XCTestCase {
     func testUnitStringFahrenheit() {
         viewModel.unit = .fahrenheit
         XCTAssertTrue(viewModel.unitString().contains("F"))
+        viewModel.unit = .celsius
     }
 }
