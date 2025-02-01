@@ -6,30 +6,53 @@
 //
 
 import XCTest
+@testable import WeatherApp
+
+//static func iconURL(code: String) -> URL? {
+//    var urlString = iconBaseURL
+//    urlString.append(contentsOf: "\(code).png")
+//    return URL(string: urlString)
+//}
+//
+//static func weather(with queryParameters: [URLQueryItem]) -> URL? {
+//    if var components = URLComponents(string: baseURL) {
+//        var parameters = queryParameters
+//        parameters.append(URLQueryItem(name: "appid", value: apiKey))
+//        components.queryItems = parameters
+//        return components.url
+//    }
+//    return nil
+//}
 
 final class ApiEndpointsTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    func testIconURL() {
+        // given - the input
+        let iconCode = "040d"
+        
+        // when
+        let endpoint = ApiEndpoints.iconURL(code: iconCode)
+        
+        guard let endpoint = endpoint else {
+            XCTFail("Endpoint is nil")
+            return
         }
+        XCTAssertEqual(endpoint.relativeString, "https://openweathermap.org/img/wn/040d.png")
     }
-
+    
+    func testWeatherQueryParameters() {
+        // given the these query params
+        let parameters: [URLQueryItem] = [
+            URLQueryItem(name: "q", value: "London"),
+            URLQueryItem(name: "units", value: "metric")
+        ]
+        
+        let url = ApiEndpoints.weather(with: parameters)
+        
+        guard let endpoint = url else {
+            XCTFail("Endpoint is nil")
+            return
+        }
+        XCTAssertEqual(endpoint.relativeString, "https://api.openweathermap.org/data/2.5/weather?q=London&units=metric&appid=55d3b00d9ec14f573cb1ae24908a0d11")
+    }
 }

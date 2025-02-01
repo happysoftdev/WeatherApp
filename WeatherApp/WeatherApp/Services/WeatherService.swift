@@ -7,27 +7,48 @@
 
 import Foundation
 import Combine
+import CoreLocation
 
+enum ServiceError: Error {
+    case invalidURL
+}
+
+// IMPROVEMENT: use CLLocationCoordinates as parameters
 // DI -> mocking -> reusability
 protocol WeatherServiceProtocol: AnyObject {
     func fetchWeather(for city: String, unit: String?) -> AnyPublisher<Forecast, Error>
     func fetchWeather(with lat: Double, and lon: Double, unit: String?) -> AnyPublisher<Forecast, Error>
 }
 
+
+// MARK: - Mock service
 class MockWeatherService: WeatherServiceProtocol {
+    var shouldReturnError = false
+    var mockForecast: Forecast?
+    
+    enum MockServiceError: Error {
+        case someError
+        case noData
+    }
     
     func fetchWeather(for city: String, unit: String? = "metric") -> AnyPublisher<Forecast, Error> {
-        let weatherForecast = Forecast.mock
-        return Just(weatherForecast)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        return makeRequest()
     }
     
     func fetchWeather(with lat: Double, and lon: Double, unit: String? = "metric") -> AnyPublisher<Forecast, Error> {
-        let weatherForecast = Forecast.mock
-        return Just(weatherForecast)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        return makeRequest()
+    }
+    
+    private func makeRequest() -> AnyPublisher<Forecast, Error> {
+        if shouldReturnError {
+            return Fail(error: MockServiceError.someError).eraseToAnyPublisher()
+        } else if let mockForecast = mockForecast {
+            return Just(mockForecast)
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
+        } else {
+            return Fail(error: MockServiceError.noData).eraseToAnyPublisher()
+        }
     }
 }
 
@@ -59,7 +80,7 @@ class WeatherService: WeatherServiceProtocol {
                                            body: Data? = nil,
                                            type: T.Type) -> AnyPublisher<T, Error> {
         guard let url = url else {
-            fatalError("Invalid URL")
+            return Fail(error: ServiceError.invalidURL).eraseToAnyPublisher()
         }
         
         var request = URLRequest(url: url)
@@ -79,6 +100,7 @@ class WeatherService: WeatherServiceProtocol {
                 return output.data
             }
             .decode(type: T.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
             .eraseToAnyPublisher()
     }
     
