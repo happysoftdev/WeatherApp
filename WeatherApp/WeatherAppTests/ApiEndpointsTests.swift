@@ -8,22 +8,6 @@
 import XCTest
 @testable import WeatherApp
 
-//static func iconURL(code: String) -> URL? {
-//    var urlString = iconBaseURL
-//    urlString.append(contentsOf: "\(code).png")
-//    return URL(string: urlString)
-//}
-//
-//static func weather(with queryParameters: [URLQueryItem]) -> URL? {
-//    if var components = URLComponents(string: baseURL) {
-//        var parameters = queryParameters
-//        parameters.append(URLQueryItem(name: "appid", value: apiKey))
-//        components.queryItems = parameters
-//        return components.url
-//    }
-//    return nil
-//}
-
 final class ApiEndpointsTests: XCTestCase {
 
     func testIconURL() {
