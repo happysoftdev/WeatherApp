@@ -24,6 +24,7 @@ struct SettingsView: View {
                                     .foregroundColor(.blue)
                                 Text("Temperature unit")
                                     .font(.body)
+                                    .accessibilityIdentifier("temperatureUnitText")
                             }
                             Picker("Unit", selection: $unit) {
                                 ForEach(TemperatureUnit.allCases) { unit in
@@ -31,7 +32,9 @@ struct SettingsView: View {
                                 }
                             }
                             .pickerStyle(SegmentedPickerStyle())
+                            .accessibilityIdentifier("temperatureUnitPicker")
                         }
+                        .accessibilityIdentifier("temperatureUnitVStack")
                     }
             }
             .listStyle(GroupedListStyle())
